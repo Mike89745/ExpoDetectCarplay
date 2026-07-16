@@ -1,0 +1,9 @@
+{
+  "platforms": ["apple", "android"],
+  "apple": {
+    "modules": ["ExpoDetectCarplayModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.detectcarplay.ExpoDetectCarplayModule"]
+  }
+}
