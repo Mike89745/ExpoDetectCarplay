@@ -1,15 +1,43 @@
 {
   "name": "expo-detect-carplay",
   "version": "0.1.0",
-  "description": "My new module",
-  "main": "build/index.js",
+  "description": "Expo module for observing CarPlay and Android Auto connection state",
+  "main": "build/cjs/index.js",
+  "module": "build/index.js",
+  "react-native": "build/index.js",
   "types": "build/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "react-native": "./build/index.js",
+      "import": "./build/index.js",
+      "require": "./build/cjs/index.js",
+      "default": "./build/index.js"
+    },
+    "./app.plugin": "./app.plugin.js",
+    "./app.plugin.js": "./app.plugin.js"
+  },
+  "files": [
+    "build/",
+    "plugin/build/",
+    "app.plugin.js",
+    "ios/",
+    "android/src/",
+    "android/build.gradle",
+    "expo-module.config.json",
+    "src/",
+    "!src/__tests__/"
+  ],
   "scripts": {
-    "build": "node internal/module_scripts/build.js",
+    "build": "node internal/module_scripts/build.js && npm run build:cjs && npm run build:package-metadata && npm run build:plugin",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:package-metadata": "node scripts/write-build-package-metadata.cjs",
+    "build:plugin": "node internal/module_scripts/build.js plugin",
     "clean": "node internal/module_scripts/clean.js",
-    "lint": "eslint src/",
+    "lint": "eslint src/ plugin/src/",
     "test": "node internal/module_scripts/test.js",
-    "prepare": "node internal/module_scripts/prepare.js",
+    "prepare": "node internal/module_scripts/prepare.js && npm run build:cjs && npm run build:package-metadata",
+    "prepublishOnly": "npm run prepare",
     "open:ios": "node internal/module_scripts/open-ios.js",
     "open:android": "node internal/module_scripts/open-android.js"
   },
@@ -31,6 +59,7 @@
     "@babel/core": "^7.26.0",
     "@types/jest": "^29.2.1",
     "@types/react": "~19.1.1",
+    "babel-jest": "^29.7.0",
     "babel-preset-expo": "~55.0.8",
     "eslint": "~9.39.4",
     "eslint-config-universe": "^15.0.3",
@@ -42,12 +71,23 @@
     "typescript": "^5.9.2"
   },
   "jest": {
-    "preset": "jest-expo",
     "roots": [
       "<rootDir>/src"
-    ]
+    ],
+    "testEnvironment": "node",
+    "transform": {
+      "^.+\\.[jt]sx?$": [
+        "babel-jest",
+        {
+          "presets": [
+            "babel-preset-expo"
+          ]
+        }
+      ]
+    }
   },
   "peerDependencies": {
+    "@expo/config-plugins": "*",
     "expo": "*",
     "react": "*",
     "react-native": "*"
