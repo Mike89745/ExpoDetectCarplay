@@ -1,6 +1,6 @@
 {
   "name": "expo-detect-carplay",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Expo module for observing CarPlay and Android Auto connection state",
   "main": "build/cjs/index.js",
   "module": "build/index.js",
@@ -65,13 +65,13 @@
     "expo-detect-carplay",
     "ExpoDetectCarplay"
   ],
-  "repository": "https://github.com/Mike89745/expo-detect-carplay",
+  "repository": "https://github.com/Mike89745/ExpoDetectCarplay",
   "bugs": {
-    "url": "https://github.com/Mike89745/expo-detect-carplay/issues"
+    "url": "https://github.com/Mike89745/ExpoDetectCarplay/issues"
   },
   "author": "Martin Mikes <mikes89745@gmail.com> (https://github.com/Mike89745)",
   "license": "MIT",
-  "homepage": "https://github.com/Mike89745/expo-detect-carplay#readme",
+  "homepage": "https://github.com/Mike89745/ExpoDetectCarplay#readme",
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@types/jest": "^29.2.1",
