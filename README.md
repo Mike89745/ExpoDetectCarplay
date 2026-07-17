@@ -2,8 +2,6 @@
 
 An Expo native module for observing CarPlay and Android Auto connection state on iOS and Android.
 
-This package is independent from `expo-beacon`. Install either package on its own, or install both when an app needs beacon and vehicle-connection features.
-
 ## Installation
 
 ```sh

@@ -40,26 +40,136 @@ import Foundation
 import TSLocationManager
 
 final class CarPlayGeoPlugin: CarPlayLifecycleDelegate {
+  private static let stopGrace: TimeInterval = 30
+  private static let stationaryTransitionTimeout: TimeInterval = 10
+
   private var trackingRequested = false
+  private var lifecycleGeneration: UInt = 0
+  private var pendingFinalization: DispatchWorkItem?
+  private var pendingStationaryTransition: DispatchWorkItem?
+  private var awaitingStationaryGeneration: UInt?
+  private var motionChangeListenerRegistered = false
 
   func carPlayDidConnect(transport: String) {
     runOnMain {
-      if !self.trackingRequested {
-        self.trackingRequested = true
-        BackgroundGeolocation.sharedInstance().start()
-      }
-      BackgroundGeolocation.sharedInstance().changePace(true)
+      self.lifecycleGeneration &+= 1
+      self.cancelFinalization()
+      self.trackingRequested = true
+      self.ensureMotionChangeListener()
+      let bgGeo = BackgroundGeolocation.sharedInstance()
+      bgGeo.start()
+      bgGeo.changePace(true)
     }
   }
 
   func carPlayDidDisconnect() {
     runOnMain {
       guard self.trackingRequested else { return }
-      self.trackingRequested = false
-      BackgroundGeolocation.sharedInstance().sync({ _ in }, failure: { _ in })
-      BackgroundGeolocation.sharedInstance().changePace(false)
-      BackgroundGeolocation.sharedInstance().stop()
+      self.lifecycleGeneration &+= 1
+      let generation = self.lifecycleGeneration
+      self.pendingFinalization?.cancel()
+      let finalization = DispatchWorkItem { [weak self] in
+        guard let self = self,
+              generation == self.lifecycleGeneration,
+              self.trackingRequested else { return }
+        self.pendingFinalization = nil
+        self.trackingRequested = false
+        self.requestFinalPosition(generation: generation)
+      }
+      self.pendingFinalization = finalization
+      DispatchQueue.main.asyncAfter(
+        deadline: .now() + Self.stopGrace,
+        execute: finalization
+      )
     }
+  }
+
+  private func canFinalize(_ generation: UInt) -> Bool {
+    !trackingRequested && generation == lifecycleGeneration
+  }
+
+  private func cancelFinalization() {
+    pendingFinalization?.cancel()
+    pendingFinalization = nil
+    pendingStationaryTransition?.cancel()
+    pendingStationaryTransition = nil
+    awaitingStationaryGeneration = nil
+  }
+
+  private func ensureMotionChangeListener() {
+    guard !motionChangeListenerRegistered else { return }
+    motionChangeListenerRegistered = true
+    _ = BackgroundGeolocation.sharedInstance().onMotionChange { [weak self] _ in
+      guard let self = self else { return }
+      self.runOnMain {
+        self.stationaryTransitionCompleted()
+      }
+    }
+  }
+
+  private func requestFinalPosition(generation: UInt) {
+    guard canFinalize(generation) else { return }
+    let request = TSCurrentPositionRequest(
+      persist: true,
+      success: { [weak self] _ in
+        self?.runOnMain {
+          self?.changeToStationary(generation: generation)
+        }
+      },
+      failure: { [weak self] error in
+        NSLog("[CarPlayGeoPlugin] getCurrentPosition failed: %@", error.localizedDescription)
+        self?.runOnMain {
+          self?.changeToStationary(generation: generation)
+        }
+      }
+    )
+    BackgroundGeolocation.sharedInstance().getCurrentPosition(request)
+  }
+
+  private func changeToStationary(generation: UInt) {
+    guard canFinalize(generation) else { return }
+    awaitingStationaryGeneration = generation
+    let timeout = DispatchWorkItem { [weak self] in
+      guard let self = self,
+            self.awaitingStationaryGeneration == generation,
+            self.canFinalize(generation) else { return }
+      NSLog("[CarPlayGeoPlugin] changePace(false) motion-change timed out")
+      self.stationaryTransitionCompleted()
+    }
+    pendingStationaryTransition = timeout
+    DispatchQueue.main.asyncAfter(
+      deadline: .now() + Self.stationaryTransitionTimeout,
+      execute: timeout
+    )
+    BackgroundGeolocation.sharedInstance().changePace(false)
+  }
+
+  private func stationaryTransitionCompleted() {
+    guard let generation = awaitingStationaryGeneration,
+          canFinalize(generation) else { return }
+    awaitingStationaryGeneration = nil
+    pendingStationaryTransition?.cancel()
+    pendingStationaryTransition = nil
+    syncAndStop(generation: generation)
+  }
+
+  private func syncAndStop(generation: UInt) {
+    guard canFinalize(generation) else { return }
+    BackgroundGeolocation.sharedInstance().sync({ [weak self] _ in
+      self?.runOnMain {
+        self?.stopTracking(generation: generation)
+      }
+    }, failure: { [weak self] error in
+      NSLog("[CarPlayGeoPlugin] sync failed: %@", error.localizedDescription)
+      self?.runOnMain {
+        self?.stopTracking(generation: generation)
+      }
+    })
+  }
+
+  private func stopTracking(generation: UInt) {
+    guard canFinalize(generation) else { return }
+    BackgroundGeolocation.sharedInstance().stop()
   }
 
   private func runOnMain(_ block: @escaping () -> Void) {
