@@ -1,110 +1,137 @@
 # expo-detect-carplay
 
-An Expo native module for observing CarPlay and Android Auto connection state on iOS and Android.
+Expo native module for observing CarPlay and Android Auto connection state on
+iOS and Android, including persistent monitoring, notifications, event logging,
+native API forwarding, and optional background-geolocation integration.
 
-## Installation
+| Platform | Detection                                    | Background behavior                                 |
+| -------- | -------------------------------------------- | --------------------------------------------------- |
+| Android  | AndroidX `CarConnection`                     | Connected-device foreground service                 |
+| iOS      | Car audio route; optional Driving Task scene | Foreground observation with optional location wakes |
+| Web      | Inert fallback                               | Monitoring methods are no-ops                       |
+
+## Important constraints
+
+- Native code is required. Expo Go is not supported.
+- Add the bundled config plugin before creating a development build.
+- Basic iOS detection does not require a CarPlay entitlement, but audio-route
+  observation cannot launch a terminated app.
+- Enable `ios.carplayDrivingTask` only after Apple grants the entitlement and
+  the provisioning profile contains it.
+- The background-geolocation bridge is optional and requires
+  `react-native-background-geolocation` in the consuming app.
+
+## Install
 
 ```sh
 npx expo install expo-detect-carplay
 ```
 
-This package contains native code, so it requires a development build or bare React Native app; it does not run in Expo Go.
-
-Add the config plugin to your app config:
+Add the config plugin:
 
 ```json
 {
   "expo": {
-    "plugins": [
-      [
-        "expo-detect-carplay",
-        {
-          "ios": {
-            "backgroundGeolocation": false,
-            "backgroundLocation": false,
-            "carplayDrivingTask": false
-          },
-          "android": {
-            "backgroundGeolocation": false,
-            "androidAuto": {
-              "register": true,
-              "usesName": "template"
-            }
-          }
-        }
-      ]
-    ]
+    "plugins": ["expo-detect-carplay"]
   }
 }
 ```
 
-Run `npx expo prebuild` after changing native plugin options. In a bare iOS app, also run `npx pod-install`.
+Rebuild the native application after adding or changing the plugin:
 
-### Plugin options
+```sh
+npx expo prebuild
+npx expo run:android
+# or: npx expo run:ios
+```
 
-- `android.androidAuto.register` defaults to `true` and adds the Android Auto application metadata and automotive descriptor required by `CarConnection`.
-- `android.androidAuto.usesName` defaults to `template`; supported values are `template`, `media`, and `notification`.
-- `ios.backgroundGeolocation` and `android.backgroundGeolocation` default to `false`. Enable them to generate a native vehicle lifecycle bridge for `react-native-background-geolocation`; that dependency must already be installed and configured.
-- `ios.backgroundLocation` defaults to `false`. Enable it if the app should use significant-location and visit wakes to reconcile state in the background; provide the matching location permission text as needed.
-- `ios.carplayDrivingTask` defaults to unmanaged. Set it to `true` only after Apple grants the Driving Task entitlement and the provisioning profile contains it. This installs `ExpoDetectCarplay.CarPlaySceneDelegate` for authoritative lifecycle callbacks.
+See [Getting started](docs/getting-started.md) for platform permissions and the
+complete installation path.
 
-Basic iOS detection uses the active `.carAudio` route and does not require a CarPlay entitlement. Audio-route observation alone cannot launch a terminated app.
-
-## Usage
+## Monitor vehicle connections
 
 ```ts
-import ExpoDetectCarplay from "expo-detect-carplay";
+import { Platform } from 'react-native';
+import { ExpoDetectCarplay } from 'expo-detect-carplay';
 
-await ExpoDetectCarplay.requestPermissionsAsync();
-await ExpoDetectCarplay.startCarPlayMonitoring();
+if (Platform.OS === 'android') {
+  const granted = await ExpoDetectCarplay.requestPermissionsAsync();
+  if (!granted) {
+    throw new Error('Vehicle connection permissions were not granted');
+  }
+}
 
-const connected = ExpoDetectCarplay.addListener("onCarPlayConnected", (event) => {
-  console.log("vehicle connected", event.transport);
-});
-
-const disconnected = ExpoDetectCarplay.addListener(
-  "onCarPlayDisconnected",
-  (event) => console.log("vehicle disconnected", event.reason),
+const connected = ExpoDetectCarplay.addListener('onCarPlayConnected', (event) =>
+  console.log('connected', event.transport)
+);
+const disconnected = ExpoDetectCarplay.addListener('onCarPlayDisconnected', (event) =>
+  console.log('disconnected', event.reason)
 );
 
+await ExpoDetectCarplay.startCarPlayMonitoring();
 const status = ExpoDetectCarplay.getCarPlayConnectionStatus();
-const diagnostics = ExpoDetectCarplay.getCarPlayDiagnostics();
 
+// When persistent monitoring is no longer wanted:
+await ExpoDetectCarplay.stopCarPlayMonitoring();
 connected.remove();
 disconnected.remove();
-await ExpoDetectCarplay.stopCarPlayMonitoring();
 ```
 
-Or use the hook:
+The default export remains available for backwards compatibility. See
+[Monitoring](docs/monitoring.md) for lifecycle, diagnostics, and cleanup.
+Basic iOS audio-route monitoring needs no permission; call
+`requestPermissionsAsync` on iOS only after configuring the location usage
+descriptions through `ios.backgroundLocation`.
+
+## React hook
 
 ```tsx
-import { useCarPlay } from "expo-detect-carplay";
+import { useCarPlay } from 'expo-detect-carplay';
 
-const { connected, transport, startMonitoring, stopMonitoring } = useCarPlay({
-  autoStart: true,
-});
+function VehicleStatus() {
+  const { connected, transport, isMonitoring } = useCarPlay({
+    autoStart: true,
+  });
+
+  return null; // Render these values in your application UI.
+}
 ```
 
-## API
+## Typed config-plugin options
 
-- `startCarPlayMonitoring()` / `stopCarPlayMonitoring()`
-- `isCarPlayMonitoringEnabled()`
-- `getCarPlayConnectionStatus()`
-- `getCarPlayDiagnostics()`
-- `requestPermissionsAsync()`
-- `setCarPlayNotificationConfig(config)`
-- `enableEventLogging()` / `disableEventLogging()` / `isEventLoggingEnabled()`
-- `getEventLogs(options?)` / `clearEventLogs()` / `destroyEventLogs()`
-- `setApiEndpoint(url, apiKey?, id?)` / `getApiEndpoint()`
-- events: `onCarPlayConnected`, `onCarPlayDisconnected`, `onCarPlayError`
+```ts
+import type { CarPlayPluginProps } from 'expo-detect-carplay/plugin';
+```
 
-Event logs, notification settings, API forwarding, and monitoring state are owned by this package and are separate from `expo-beacon`.
+See [Config plugin](docs/config-plugin.md) for Android Auto registration, iOS
+background location, the Driving Task entitlement, and integration options.
 
-## Platform behavior
+## Documentation
 
-- Android uses `androidx.car.app.connection.CarConnection` and a connected-device foreground service. Monitoring is restored after process death, app updates, and reboot while it remains enabled.
-- iOS observes `AVAudioSession` route changes, with optional location wakes and optional entitlement-backed CarPlay scene callbacks.
-- Web exports inert status values and no-op async monitoring methods.
+- [Documentation index](docs/index.md)
+- [Getting started](docs/getting-started.md)
+- [Monitoring](docs/monitoring.md)
+- [Platform support](docs/platform-support.md)
+- [Config plugin](docs/config-plugin.md)
+- [Background geolocation](docs/background-geolocation.md)
+- [Event logging and forwarding](docs/event-data.md)
+- [Errors](docs/errors.md)
+- [Generated runtime API](docs/reference/runtime/README.md)
+- [Generated config-plugin API](docs/reference/plugin/README.md)
+- [`llms.txt`](llms.txt)
+
+## Contributing
+
+```sh
+npm run build
+npm test -- --runInBand
+npm run test:types
+npm run lint
+npm run docs:api
+npm pack --dry-run
+```
+
+Repository-specific guidance is in [AGENTS.md](AGENTS.md).
 
 ## License
 

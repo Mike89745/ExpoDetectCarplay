@@ -11,16 +11,27 @@ import { createRequire } from 'module';
 import * as path from 'path';
 
 export type CarPlayIOSPluginProps = {
-  /** Generate the optional react-native-background-geolocation bridge. */
+  /**
+   * Generate the optional `react-native-background-geolocation` vehicle
+   * lifecycle bridge. The dependency must be installed in the consuming app.
+   * @defaultValue false
+   */
   backgroundGeolocation?: boolean;
-  /** Enable the Apple-granted CarPlay Driving Task entitlement and scene. */
+  /**
+   * Enable the Apple-granted CarPlay Driving Task entitlement and scene.
+   * Enable only when the provisioning profile contains the entitlement.
+   * When omitted, existing host configuration is left unchanged. Set `false`
+   * to remove configuration previously owned by this plugin.
+   */
   carplayDrivingTask?: boolean;
   /**
    * Add background location configuration used to reconcile route changes when
    * iOS wakes the app for a significant-location or visit event. Default: false.
    */
   backgroundLocation?: boolean;
+  /** Value for `NSLocationWhenInUseUsageDescription`. */
   locationWhenInUsePermission?: string;
+  /** Value for `NSLocationAlwaysAndWhenInUseUsageDescription`. */
   locationAlwaysPermission?: string;
 };
 

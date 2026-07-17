@@ -1,0 +1,37 @@
+# expo-detect-carplay
+
+> Expo native module for observing CarPlay and Android Auto connection state on
+> iOS and Android. It requires a development build and does not run in Expo Go.
+
+Install with `npx expo install expo-detect-carplay`, add
+`expo-detect-carplay` to the Expo `plugins` array, rebuild native projects, and
+request permissions before starting Android monitoring. Basic iOS detection
+uses the active car-audio route and requires neither a CarPlay entitlement nor
+location permission, but it cannot launch a terminated app. On iOS,
+`requestPermissionsAsync` requests Always Location access and should only be
+called after location usage descriptions are configured. Enable the Driving
+Task entitlement only when Apple has granted it and the provisioning profile
+contains it.
+
+Prefer the named `ExpoDetectCarplay` export for new code. The default export is
+retained for compatibility. The optional background-geolocation bridge requires
+`react-native-background-geolocation` in the consuming app.
+
+## Start here
+
+- [Documentation index](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/docs/index.md): Routes documentation by task.
+- [Getting started](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/docs/getting-started.md): Installation, app configuration, permissions, and first monitor.
+- [Platform support](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/docs/platform-support.md): Android, iOS, and web behavior and constraints.
+
+## Guides
+
+- [Monitoring](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/docs/monitoring.md): Persistent observation, events, status snapshots, diagnostics, and hook usage.
+- [Config plugin](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/docs/config-plugin.md): Android Auto registration, iOS location wakes, Driving Task entitlement, and typed options.
+- [Background geolocation](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/docs/background-geolocation.md): Optional vehicle lifecycle integration.
+- [Event data](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/docs/event-data.md): SQLite logs, notifications, and native HTTP forwarding.
+- [Errors](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/docs/errors.md): Typed error codes and corrective actions.
+
+## API reference
+
+- [Runtime API](https://github.com/Mike89745/ExpoDetectCarplay/tree/master/docs/reference/runtime): Generated from public TypeScript and TSDoc.
+- [Config-plugin API](https://github.com/Mike89745/ExpoDetectCarplay/tree/master/docs/reference/plugin): Generated from config-plugin exports and TSDoc.

@@ -1,6 +1,6 @@
 {
   "name": "expo-detect-carplay",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Expo module for observing CarPlay and Android Auto connection state",
   "main": "build/cjs/index.js",
   "module": "build/index.js",
@@ -14,13 +14,28 @@
       "require": "./build/cjs/index.js",
       "default": "./build/index.js"
     },
-    "./app.plugin": "./app.plugin.js",
-    "./app.plugin.js": "./app.plugin.js"
+    "./plugin": {
+      "types": "./plugin/build/index.d.ts",
+      "require": "./plugin/build/index.js",
+      "default": "./plugin/build/index.js"
+    },
+    "./app.plugin": {
+      "types": "./plugin/build/index.d.ts",
+      "require": "./app.plugin.js",
+      "default": "./app.plugin.js"
+    },
+    "./app.plugin.js": {
+      "types": "./plugin/build/index.d.ts",
+      "require": "./app.plugin.js",
+      "default": "./app.plugin.js"
+    }
   },
   "files": [
     "build/",
     "plugin/build/",
     "app.plugin.js",
+    "docs/",
+    "llms.txt",
     "ios/",
     "android/src/",
     "android/build.gradle",
@@ -33,6 +48,9 @@
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:package-metadata": "node scripts/write-build-package-metadata.cjs",
     "build:plugin": "node internal/module_scripts/build.js plugin",
+    "docs:api": "typedoc --options typedoc.json && typedoc --options plugin/typedoc.json",
+    "docs:check": "npm run docs:api && git diff --exit-code -- docs/reference",
+    "test:types": "npm run build && tsc -p tests/consumer/tsconfig.json",
     "clean": "node internal/module_scripts/clean.js",
     "lint": "eslint src/ plugin/src/",
     "test": "node internal/module_scripts/test.js",
@@ -54,7 +72,6 @@
   "author": "Martin Mikes <mikes89745@gmail.com> (https://github.com/Mike89745)",
   "license": "MIT",
   "homepage": "https://github.com/Mike89745/expo-detect-carplay#readme",
-  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@types/jest": "^29.2.1",
@@ -68,6 +85,8 @@
     "jest-expo": "~55.0.9",
     "prettier": "^3.0.0",
     "react-native": "0.82.1",
+    "typedoc": "^0.28.20",
+    "typedoc-plugin-markdown": "^4.12.0",
     "typescript": "^5.9.2"
   },
   "jest": {

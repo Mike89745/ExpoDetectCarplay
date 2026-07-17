@@ -12,12 +12,17 @@ import * as path from 'path';
 export type AndroidAutoUsesName = 'template' | 'media' | 'notification';
 
 export type CarPlayAndroidPluginProps = {
-  /** Generate the optional react-native-background-geolocation bridge. */
+  /**
+   * Generate the optional `react-native-background-geolocation` vehicle
+   * lifecycle bridge. The dependency must be installed in the consuming app.
+   * @defaultValue false
+   */
   backgroundGeolocation?: boolean;
+  /** Android Auto application registration settings. */
   androidAuto?: {
-    /** Register the host as Android-Auto-aware. Default: true. */
+    /** Register the host as Android-Auto-aware. @defaultValue true */
     register?: boolean;
-    /** Default: `template`. */
+    /** Automotive application category. @defaultValue 'template' */
     usesName?: AndroidAutoUsesName;
   };
 };
@@ -40,8 +45,8 @@ import com.transistorsoft.locationmanager.adapter.callback.TSCallback
 import com.transistorsoft.locationmanager.adapter.callback.TSLocationCallback
 import com.transistorsoft.locationmanager.adapter.callback.TSSyncCallback
 import com.transistorsoft.locationmanager.data.LocationModel
+import com.transistorsoft.locationmanager.event.LocationEvent
 import com.transistorsoft.locationmanager.location.TSCurrentPositionRequest
-import com.transistorsoft.locationmanager.location.TSLocation
 import expo.modules.detectcarplay.CarPlayEventPlugin
 
 class CarPlayGeoPlugin(context: Context) : CarPlayEventPlugin {
@@ -97,7 +102,7 @@ class CarPlayGeoPlugin(context: Context) : CarPlayEventPlugin {
     val builder = TSCurrentPositionRequest.Builder(appContext)
     builder.setPersist(true)
     builder.setCallback(object : TSLocationCallback {
-      override fun onLocation(location: TSLocation) = runOnMain {
+      override fun onLocation(event: LocationEvent) = runOnMain {
         changeToStationary(generation)
       }
 
