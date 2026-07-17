@@ -8,7 +8,7 @@
 
 > **CarPlayErrorEvent** = `object`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:75](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L75)
+Defined in: [src/ExpoDetectCarplay.types.ts:75](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L75)
 
 Payload emitted through `onCarPlayError`.
 
@@ -18,7 +18,7 @@ Payload emitted through `onCarPlayError`.
 
 > **code**: [`CarPlayErrorCode`](CarPlayErrorCode.md)
 
-Defined in: [src/ExpoDetectCarplay.types.ts:76](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L76)
+Defined in: [src/ExpoDetectCarplay.types.ts:76](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L76)
 
 ***
 
@@ -26,4 +26,4 @@ Defined in: [src/ExpoDetectCarplay.types.ts:76](https://github.com/Mike89745/Exp
 
 > **message**: `string`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:77](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L77)
+Defined in: [src/ExpoDetectCarplay.types.ts:77](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L77)

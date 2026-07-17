@@ -6,7 +6,7 @@
 
 # Interface: UseCarPlayOptions
 
-Defined in: [src/hooks/useCarPlay.ts:13](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/hooks/useCarPlay.ts#L13)
+Defined in: [src/hooks/useCarPlay.ts:13](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/hooks/useCarPlay.ts#L13)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/hooks/useCarPlay.ts:13](https://github.com/Mike89745/ExpoDetect
 
 > `optional` **autoStart?**: `boolean`
 
-Defined in: [src/hooks/useCarPlay.ts:17](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/hooks/useCarPlay.ts#L17)
+Defined in: [src/hooks/useCarPlay.ts:17](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/hooks/useCarPlay.ts#L17)
 
 Start persistent observation on mount. Default: `false`.
 
@@ -24,7 +24,7 @@ Start persistent observation on mount. Default: `false`.
 
 > `optional` **onConnected?**: (`event`) => `void`
 
-Defined in: [src/hooks/useCarPlay.ts:14](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/hooks/useCarPlay.ts#L14)
+Defined in: [src/hooks/useCarPlay.ts:14](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/hooks/useCarPlay.ts#L14)
 
 #### Parameters
 
@@ -42,7 +42,7 @@ Defined in: [src/hooks/useCarPlay.ts:14](https://github.com/Mike89745/ExpoDetect
 
 > `optional` **onDisconnected?**: (`event`) => `void`
 
-Defined in: [src/hooks/useCarPlay.ts:15](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/hooks/useCarPlay.ts#L15)
+Defined in: [src/hooks/useCarPlay.ts:15](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/hooks/useCarPlay.ts#L15)
 
 #### Parameters
 

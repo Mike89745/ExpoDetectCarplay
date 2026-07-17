@@ -8,7 +8,7 @@
 
 > **CarPlayIOSPluginProps** = `object`
 
-Defined in: [withCarPlayIOS.ts:13](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/plugin/src/withCarPlayIOS.ts#L13)
+Defined in: [withCarPlayIOS.ts:13](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/plugin/src/withCarPlayIOS.ts#L13)
 
 ## Properties
 
@@ -16,7 +16,7 @@ Defined in: [withCarPlayIOS.ts:13](https://github.com/Mike89745/ExpoDetectCarpla
 
 > `optional` **backgroundGeolocation?**: `boolean`
 
-Defined in: [withCarPlayIOS.ts:19](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/plugin/src/withCarPlayIOS.ts#L19)
+Defined in: [withCarPlayIOS.ts:19](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/plugin/src/withCarPlayIOS.ts#L19)
 
 Generate the optional `react-native-background-geolocation` vehicle
 lifecycle bridge. The dependency must be installed in the consuming app.
@@ -33,7 +33,7 @@ false
 
 > `optional` **backgroundLocation?**: `boolean`
 
-Defined in: [withCarPlayIOS.ts:31](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/plugin/src/withCarPlayIOS.ts#L31)
+Defined in: [withCarPlayIOS.ts:31](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/plugin/src/withCarPlayIOS.ts#L31)
 
 Add background location configuration used to reconcile route changes when
 iOS wakes the app for a significant-location or visit event. Default: false.
@@ -44,7 +44,7 @@ iOS wakes the app for a significant-location or visit event. Default: false.
 
 > `optional` **carplayDrivingTask?**: `boolean`
 
-Defined in: [withCarPlayIOS.ts:26](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/plugin/src/withCarPlayIOS.ts#L26)
+Defined in: [withCarPlayIOS.ts:26](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/plugin/src/withCarPlayIOS.ts#L26)
 
 Enable the Apple-granted CarPlay Driving Task entitlement and scene.
 Enable only when the provisioning profile contains the entitlement.
@@ -57,7 +57,7 @@ to remove configuration previously owned by this plugin.
 
 > `optional` **locationAlwaysPermission?**: `string`
 
-Defined in: [withCarPlayIOS.ts:35](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/plugin/src/withCarPlayIOS.ts#L35)
+Defined in: [withCarPlayIOS.ts:35](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/plugin/src/withCarPlayIOS.ts#L35)
 
 Value for `NSLocationAlwaysAndWhenInUseUsageDescription`.
 
@@ -67,6 +67,6 @@ Value for `NSLocationAlwaysAndWhenInUseUsageDescription`.
 
 > `optional` **locationWhenInUsePermission?**: `string`
 
-Defined in: [withCarPlayIOS.ts:33](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/plugin/src/withCarPlayIOS.ts#L33)
+Defined in: [withCarPlayIOS.ts:33](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/plugin/src/withCarPlayIOS.ts#L33)
 
 Value for `NSLocationWhenInUseUsageDescription`.

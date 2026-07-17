@@ -8,7 +8,7 @@
 
 > **ExpoDetectCarplayModuleEvents** = `object`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:98](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L98)
+Defined in: [src/ExpoDetectCarplay.types.ts:98](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L98)
 
 ## Properties
 
@@ -16,7 +16,7 @@ Defined in: [src/ExpoDetectCarplay.types.ts:98](https://github.com/Mike89745/Exp
 
 > **onCarPlayConnected**: (`params`) => `void`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:99](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L99)
+Defined in: [src/ExpoDetectCarplay.types.ts:99](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L99)
 
 #### Parameters
 
@@ -34,7 +34,7 @@ Defined in: [src/ExpoDetectCarplay.types.ts:99](https://github.com/Mike89745/Exp
 
 > **onCarPlayDisconnected**: (`params`) => `void`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:100](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L100)
+Defined in: [src/ExpoDetectCarplay.types.ts:100](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L100)
 
 #### Parameters
 
@@ -52,7 +52,7 @@ Defined in: [src/ExpoDetectCarplay.types.ts:100](https://github.com/Mike89745/Ex
 
 > **onCarPlayError**: (`params`) => `void`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:101](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L101)
+Defined in: [src/ExpoDetectCarplay.types.ts:101](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L101)
 
 #### Parameters
 

@@ -8,7 +8,7 @@
 
 > **ForegroundServiceConfig** = `object`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:1](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L1)
+Defined in: [src/ExpoDetectCarplay.types.ts:1](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L1)
 
 ## Properties
 
@@ -16,7 +16,7 @@ Defined in: [src/ExpoDetectCarplay.types.ts:1](https://github.com/Mike89745/Expo
 
 > `optional` **icon?**: `string`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:5](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L5)
+Defined in: [src/ExpoDetectCarplay.types.ts:5](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L5)
 
 Android drawable resource name.
 
@@ -26,7 +26,7 @@ Android drawable resource name.
 
 > `optional` **text?**: `string`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:3](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L3)
+Defined in: [src/ExpoDetectCarplay.types.ts:3](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L3)
 
 ***
 
@@ -34,4 +34,4 @@ Defined in: [src/ExpoDetectCarplay.types.ts:3](https://github.com/Mike89745/Expo
 
 > `optional` **title?**: `string`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:2](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L2)
+Defined in: [src/ExpoDetectCarplay.types.ts:2](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L2)

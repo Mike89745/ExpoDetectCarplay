@@ -8,7 +8,7 @@
 
 > **CarPlayNotificationConfig** = `object`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:8](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L8)
+Defined in: [src/ExpoDetectCarplay.types.ts:8](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L8)
 
 ## Properties
 
@@ -16,7 +16,7 @@ Defined in: [src/ExpoDetectCarplay.types.ts:8](https://github.com/Mike89745/Expo
 
 > `optional` **body?**: `string`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:13](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L13)
+Defined in: [src/ExpoDetectCarplay.types.ts:13](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L13)
 
 Supports `{event}` and `{transport}` placeholders.
 
@@ -26,7 +26,7 @@ Supports `{event}` and `{transport}` placeholders.
 
 > `optional` **connectedTitle?**: `string`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:10](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L10)
+Defined in: [src/ExpoDetectCarplay.types.ts:10](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L10)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [src/ExpoDetectCarplay.types.ts:10](https://github.com/Mike89745/Exp
 
 > `optional` **disconnectedTitle?**: `string`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:11](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L11)
+Defined in: [src/ExpoDetectCarplay.types.ts:11](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L11)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [src/ExpoDetectCarplay.types.ts:11](https://github.com/Mike89745/Exp
 
 > `optional` **enabled?**: `boolean`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:9](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L9)
+Defined in: [src/ExpoDetectCarplay.types.ts:9](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L9)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [src/ExpoDetectCarplay.types.ts:9](https://github.com/Mike89745/Expo
 
 > `optional` **icon?**: `string`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:17](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L17)
+Defined in: [src/ExpoDetectCarplay.types.ts:17](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L17)
 
 Android drawable resource name.
 
@@ -60,6 +60,6 @@ Android drawable resource name.
 
 > `optional` **sound?**: `boolean`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:15](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L15)
+Defined in: [src/ExpoDetectCarplay.types.ts:15](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L15)
 
 iOS only.

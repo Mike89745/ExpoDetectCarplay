@@ -8,7 +8,7 @@
 
 > **CarPlayDiagnostics** = `object`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:58](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L58)
+Defined in: [src/ExpoDetectCarplay.types.ts:58](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L58)
 
 ## Properties
 
@@ -16,7 +16,7 @@ Defined in: [src/ExpoDetectCarplay.types.ts:58](https://github.com/Mike89745/Exp
 
 > **isCarAppMetadataPresent**: `boolean`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:59](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L59)
+Defined in: [src/ExpoDetectCarplay.types.ts:59](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L59)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/ExpoDetectCarplay.types.ts:59](https://github.com/Mike89745/Exp
 
 > **isCarProviderQueryable**: `boolean`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:60](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L60)
+Defined in: [src/ExpoDetectCarplay.types.ts:60](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L60)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/ExpoDetectCarplay.types.ts:60](https://github.com/Mike89745/Exp
 
 > **lastRawConnectionType**: `number` \| `null`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:61](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L61)
+Defined in: [src/ExpoDetectCarplay.types.ts:61](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L61)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/ExpoDetectCarplay.types.ts:61](https://github.com/Mike89745/Exp
 
 > **observerActive**: `boolean`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:62](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L62)
+Defined in: [src/ExpoDetectCarplay.types.ts:62](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L62)
 
 ***
 
@@ -48,4 +48,4 @@ Defined in: [src/ExpoDetectCarplay.types.ts:62](https://github.com/Mike89745/Exp
 
 > **serviceAlive**: `boolean`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:63](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L63)
+Defined in: [src/ExpoDetectCarplay.types.ts:63](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L63)

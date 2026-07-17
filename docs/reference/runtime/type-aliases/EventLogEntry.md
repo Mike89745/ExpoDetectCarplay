@@ -8,7 +8,7 @@
 
 > **EventLogEntry** = `object`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:89](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L89)
+Defined in: [src/ExpoDetectCarplay.types.ts:89](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L89)
 
 ## Properties
 
@@ -16,7 +16,7 @@ Defined in: [src/ExpoDetectCarplay.types.ts:89](https://github.com/Mike89745/Exp
 
 > **data**: `Record`\<`string`, `unknown`\>
 
-Defined in: [src/ExpoDetectCarplay.types.ts:95](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L95)
+Defined in: [src/ExpoDetectCarplay.types.ts:95](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L95)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/ExpoDetectCarplay.types.ts:95](https://github.com/Mike89745/Exp
 
 > **eventType**: [`CarPlayEventName`](CarPlayEventName.md)
 
-Defined in: [src/ExpoDetectCarplay.types.ts:93](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L93)
+Defined in: [src/ExpoDetectCarplay.types.ts:93](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L93)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/ExpoDetectCarplay.types.ts:93](https://github.com/Mike89745/Exp
 
 > **id**: `number`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:90](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L90)
+Defined in: [src/ExpoDetectCarplay.types.ts:90](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L90)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/ExpoDetectCarplay.types.ts:90](https://github.com/Mike89745/Exp
 
 > `optional` **identifier?**: `string`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:94](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L94)
+Defined in: [src/ExpoDetectCarplay.types.ts:94](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L94)
 
 ***
 
@@ -48,6 +48,6 @@ Defined in: [src/ExpoDetectCarplay.types.ts:94](https://github.com/Mike89745/Exp
 
 > **timestamp**: `number`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:92](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L92)
+Defined in: [src/ExpoDetectCarplay.types.ts:92](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L92)
 
 Milliseconds since the Unix epoch.

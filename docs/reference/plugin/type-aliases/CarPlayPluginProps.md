@@ -8,7 +8,7 @@
 
 > **CarPlayPluginProps** = `object`
 
-Defined in: [index.ts:9](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/plugin/src/index.ts#L9)
+Defined in: [index.ts:9](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/plugin/src/index.ts#L9)
 
 Options accepted by the bundled Expo config plugin.
 
@@ -18,7 +18,7 @@ Options accepted by the bundled Expo config plugin.
 
 > `optional` **android?**: [`CarPlayAndroidPluginProps`](CarPlayAndroidPluginProps.md)
 
-Defined in: [index.ts:13](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/plugin/src/index.ts#L13)
+Defined in: [index.ts:13](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/plugin/src/index.ts#L13)
 
 Android Auto registration and optional integration settings.
 
@@ -28,6 +28,6 @@ Android Auto registration and optional integration settings.
 
 > `optional` **ios?**: [`CarPlayIOSPluginProps`](CarPlayIOSPluginProps.md)
 
-Defined in: [index.ts:11](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/plugin/src/index.ts#L11)
+Defined in: [index.ts:11](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/plugin/src/index.ts#L11)
 
 iOS detection, entitlement, location-wake, and integration settings.

@@ -40,5 +40,5 @@ is enabled but the dependency cannot be resolved.
   lifecycle operations.
 - Disabling the option removes generated bridge source and registration code on
   the next prebuild.
-- Generated Android code targets the current `LocationEvent` callback used by
-  `react-native-background-geolocation` v5.
+- Generated native sources target the background-geolocation v5 Android
+  `LocationEvent` callback and iOS `TSCurrentPositionRequest.make` factory.

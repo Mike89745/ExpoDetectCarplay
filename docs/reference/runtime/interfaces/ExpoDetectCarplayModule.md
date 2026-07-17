@@ -6,7 +6,7 @@
 
 # Interface: ExpoDetectCarplayModule
 
-Defined in: [src/ExpoDetectCarplayModule.ts:13](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplayModule.ts#L13)
+Defined in: [src/ExpoDetectCarplayModule.ts:13](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplayModule.ts#L13)
 
 ## Extends
 
@@ -52,7 +52,7 @@ Adds a listener for the given event name.
 
 > **clearEventLogs**(): `void`
 
-Defined in: [src/ExpoDetectCarplayModule.ts:46](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplayModule.ts#L46)
+Defined in: [src/ExpoDetectCarplayModule.ts:46](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplayModule.ts#L46)
 
 Delete all event-log entries without disabling logging.
 
@@ -66,7 +66,7 @@ Delete all event-log entries without disabling logging.
 
 > **destroyEventLogs**(): `void`
 
-Defined in: [src/ExpoDetectCarplayModule.ts:48](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplayModule.ts#L48)
+Defined in: [src/ExpoDetectCarplayModule.ts:48](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplayModule.ts#L48)
 
 Delete the event-log database and disable logging.
 
@@ -80,7 +80,7 @@ Delete the event-log database and disable logging.
 
 > **disableEventLogging**(): `void`
 
-Defined in: [src/ExpoDetectCarplayModule.ts:40](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplayModule.ts#L40)
+Defined in: [src/ExpoDetectCarplayModule.ts:40](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplayModule.ts#L40)
 
 Disable logging without deleting existing entries.
 
@@ -129,7 +129,7 @@ The event can include any number of arguments that will be passed to the listene
 
 > **enableEventLogging**(): `void`
 
-Defined in: [src/ExpoDetectCarplayModule.ts:38](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplayModule.ts#L38)
+Defined in: [src/ExpoDetectCarplayModule.ts:38](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplayModule.ts#L38)
 
 Enable persistent SQLite event logging.
 
@@ -143,7 +143,7 @@ Enable persistent SQLite event logging.
 
 > **getApiEndpoint**(): `object`
 
-Defined in: [src/ExpoDetectCarplayModule.ts:52](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplayModule.ts#L52)
+Defined in: [src/ExpoDetectCarplayModule.ts:52](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplayModule.ts#L52)
 
 Return the persisted native event-forwarding configuration.
 
@@ -169,7 +169,7 @@ Return the persisted native event-forwarding configuration.
 
 > **getCarPlayConnectionStatus**(): [`CarPlayConnectionStatus`](../type-aliases/CarPlayConnectionStatus.md)
 
-Defined in: [src/ExpoDetectCarplayModule.ts:21](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplayModule.ts#L21)
+Defined in: [src/ExpoDetectCarplayModule.ts:21](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplayModule.ts#L21)
 
 Return the most recent native connection snapshot.
 
@@ -183,7 +183,7 @@ Return the most recent native connection snapshot.
 
 > **getCarPlayDiagnostics**(): [`CarPlayDiagnostics`](../type-aliases/CarPlayDiagnostics.md)
 
-Defined in: [src/ExpoDetectCarplayModule.ts:23](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplayModule.ts#L23)
+Defined in: [src/ExpoDetectCarplayModule.ts:23](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplayModule.ts#L23)
 
 Return platform-specific observer and service diagnostics.
 
@@ -197,7 +197,7 @@ Return platform-specific observer and service diagnostics.
 
 > **getEventLogs**(`options?`): [`EventLogEntry`](../type-aliases/EventLogEntry.md)[]
 
-Defined in: [src/ExpoDetectCarplayModule.ts:44](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplayModule.ts#L44)
+Defined in: [src/ExpoDetectCarplayModule.ts:44](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplayModule.ts#L44)
 
 Read persisted connection and error events.
 
@@ -217,7 +217,7 @@ Read persisted connection and error events.
 
 > **isCarPlayMonitoringEnabled**(): `boolean`
 
-Defined in: [src/ExpoDetectCarplayModule.ts:19](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplayModule.ts#L19)
+Defined in: [src/ExpoDetectCarplayModule.ts:19](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplayModule.ts#L19)
 
 Return whether persistent monitoring is enabled.
 
@@ -231,7 +231,7 @@ Return whether persistent monitoring is enabled.
 
 > **isEventLoggingEnabled**(): `boolean`
 
-Defined in: [src/ExpoDetectCarplayModule.ts:42](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplayModule.ts#L42)
+Defined in: [src/ExpoDetectCarplayModule.ts:42](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplayModule.ts#L42)
 
 Return the persisted event-logging state.
 
@@ -333,7 +333,7 @@ Removes a listener for the given event name.
 
 > **requestPermissionsAsync**(): `Promise`\<`boolean`\>
 
-Defined in: [src/ExpoDetectCarplayModule.ts:36](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplayModule.ts#L36)
+Defined in: [src/ExpoDetectCarplayModule.ts:36](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplayModule.ts#L36)
 
 Request the platform permissions used by monitoring and notifications.
 
@@ -352,7 +352,7 @@ authorization; add the location usage descriptions through
 
 > **setApiEndpoint**(`url`, `apiKey?`, `id?`): `void`
 
-Defined in: [src/ExpoDetectCarplayModule.ts:50](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplayModule.ts#L50)
+Defined in: [src/ExpoDetectCarplayModule.ts:50](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplayModule.ts#L50)
 
 Configure native event forwarding to an HTTP endpoint.
 
@@ -380,7 +380,7 @@ Configure native event forwarding to an HTTP endpoint.
 
 > **setCarPlayNotificationConfig**(`config`): `void`
 
-Defined in: [src/ExpoDetectCarplayModule.ts:25](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplayModule.ts#L25)
+Defined in: [src/ExpoDetectCarplayModule.ts:25](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplayModule.ts#L25)
 
 Persist connection-event and foreground-service notification settings.
 
@@ -400,7 +400,7 @@ Persist connection-event and foreground-service notification settings.
 
 > **startCarPlayMonitoring**(): `Promise`\<`void`\>
 
-Defined in: [src/ExpoDetectCarplayModule.ts:15](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplayModule.ts#L15)
+Defined in: [src/ExpoDetectCarplayModule.ts:15](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplayModule.ts#L15)
 
 Start persistent CarPlay and Android Auto connection monitoring.
 
@@ -445,7 +445,7 @@ Override it in a subclass to perform some additional setup once the event starte
 
 > **stopCarPlayMonitoring**(): `Promise`\<`void`\>
 
-Defined in: [src/ExpoDetectCarplayModule.ts:17](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplayModule.ts#L17)
+Defined in: [src/ExpoDetectCarplayModule.ts:17](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplayModule.ts#L17)
 
 Stop monitoring and clear the persisted connection snapshot.
 

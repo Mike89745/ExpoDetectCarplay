@@ -120,8 +120,8 @@ final class CarPlayGeoPlugin: CarPlayLifecycleDelegate {
 
   private func requestFinalPosition(generation: UInt) {
     guard canFinalize(generation) else { return }
-    let request = TSCurrentPositionRequest(
-      persist: true,
+    let request = TSCurrentPositionRequest.make(
+      type: .current,
       success: { [weak self] _ in
         self?.runOnMain {
           self?.changeToStationary(generation: generation)
@@ -134,6 +134,7 @@ final class CarPlayGeoPlugin: CarPlayLifecycleDelegate {
         }
       }
     )
+    request.persist = true
     BackgroundGeolocation.sharedInstance().getCurrentPosition(request)
   }
 

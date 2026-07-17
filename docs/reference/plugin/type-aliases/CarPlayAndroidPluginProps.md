@@ -8,7 +8,7 @@
 
 > **CarPlayAndroidPluginProps** = `object`
 
-Defined in: [withCarPlayAndroid.ts:14](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/plugin/src/withCarPlayAndroid.ts#L14)
+Defined in: [withCarPlayAndroid.ts:14](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/plugin/src/withCarPlayAndroid.ts#L14)
 
 ## Properties
 
@@ -16,7 +16,7 @@ Defined in: [withCarPlayAndroid.ts:14](https://github.com/Mike89745/ExpoDetectCa
 
 > `optional` **androidAuto?**: `object`
 
-Defined in: [withCarPlayAndroid.ts:22](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/plugin/src/withCarPlayAndroid.ts#L22)
+Defined in: [withCarPlayAndroid.ts:22](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/plugin/src/withCarPlayAndroid.ts#L22)
 
 Android Auto application registration settings.
 
@@ -50,7 +50,7 @@ Automotive application category.
 
 > `optional` **backgroundGeolocation?**: `boolean`
 
-Defined in: [withCarPlayAndroid.ts:20](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/plugin/src/withCarPlayAndroid.ts#L20)
+Defined in: [withCarPlayAndroid.ts:20](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/plugin/src/withCarPlayAndroid.ts#L20)
 
 Generate the optional `react-native-background-geolocation` vehicle
 lifecycle bridge. The dependency must be installed in the consuming app.

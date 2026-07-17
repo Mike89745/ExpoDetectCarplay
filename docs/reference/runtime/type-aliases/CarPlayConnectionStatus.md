@@ -8,7 +8,7 @@
 
 > **CarPlayConnectionStatus** = `object`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:51](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L51)
+Defined in: [src/ExpoDetectCarplay.types.ts:51](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L51)
 
 ## Properties
 
@@ -16,7 +16,7 @@ Defined in: [src/ExpoDetectCarplay.types.ts:51](https://github.com/Mike89745/Exp
 
 > **connected**: `boolean`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:52](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L52)
+Defined in: [src/ExpoDetectCarplay.types.ts:52](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L52)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/ExpoDetectCarplay.types.ts:52](https://github.com/Mike89745/Exp
 
 > `optional` **timestamp?**: `number`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:54](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L54)
+Defined in: [src/ExpoDetectCarplay.types.ts:54](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L54)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/ExpoDetectCarplay.types.ts:54](https://github.com/Mike89745/Exp
 
 > `optional` **timestampIso?**: `string`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:55](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L55)
+Defined in: [src/ExpoDetectCarplay.types.ts:55](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L55)
 
 ***
 
@@ -40,4 +40,4 @@ Defined in: [src/ExpoDetectCarplay.types.ts:55](https://github.com/Mike89745/Exp
 
 > `optional` **transport?**: [`CarPlayTransport`](CarPlayTransport.md)
 
-Defined in: [src/ExpoDetectCarplay.types.ts:53](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L53)
+Defined in: [src/ExpoDetectCarplay.types.ts:53](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L53)

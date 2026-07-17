@@ -8,7 +8,7 @@
 
 > **CarPlayChannelConfig** = `object`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:20](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L20)
+Defined in: [src/ExpoDetectCarplay.types.ts:20](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L20)
 
 ## Properties
 
@@ -16,7 +16,7 @@ Defined in: [src/ExpoDetectCarplay.types.ts:20](https://github.com/Mike89745/Exp
 
 > `optional` **description?**: `string`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:22](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L22)
+Defined in: [src/ExpoDetectCarplay.types.ts:22](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L22)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/ExpoDetectCarplay.types.ts:22](https://github.com/Mike89745/Exp
 
 > `optional` **importance?**: `"low"` \| `"default"` \| `"high"`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:23](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L23)
+Defined in: [src/ExpoDetectCarplay.types.ts:23](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L23)
 
 ***
 
@@ -32,4 +32,4 @@ Defined in: [src/ExpoDetectCarplay.types.ts:23](https://github.com/Mike89745/Exp
 
 > `optional` **name?**: `string`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:21](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L21)
+Defined in: [src/ExpoDetectCarplay.types.ts:21](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L21)

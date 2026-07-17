@@ -6,7 +6,7 @@
 
 # Interface: UseCarPlayResult
 
-Defined in: [src/hooks/useCarPlay.ts:20](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/hooks/useCarPlay.ts#L20)
+Defined in: [src/hooks/useCarPlay.ts:20](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/hooks/useCarPlay.ts#L20)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/hooks/useCarPlay.ts:20](https://github.com/Mike89745/ExpoDetect
 
 > **connected**: `boolean`
 
-Defined in: [src/hooks/useCarPlay.ts:21](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/hooks/useCarPlay.ts#L21)
+Defined in: [src/hooks/useCarPlay.ts:21](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/hooks/useCarPlay.ts#L21)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/hooks/useCarPlay.ts:21](https://github.com/Mike89745/ExpoDetect
 
 > **getDiagnostics**: () => [`CarPlayDiagnostics`](../type-aliases/CarPlayDiagnostics.md)
 
-Defined in: [src/hooks/useCarPlay.ts:29](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/hooks/useCarPlay.ts#L29)
+Defined in: [src/hooks/useCarPlay.ts:29](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/hooks/useCarPlay.ts#L29)
 
 #### Returns
 
@@ -34,7 +34,7 @@ Defined in: [src/hooks/useCarPlay.ts:29](https://github.com/Mike89745/ExpoDetect
 
 > **isMonitoring**: `boolean`
 
-Defined in: [src/hooks/useCarPlay.ts:23](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/hooks/useCarPlay.ts#L23)
+Defined in: [src/hooks/useCarPlay.ts:23](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/hooks/useCarPlay.ts#L23)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [src/hooks/useCarPlay.ts:23](https://github.com/Mike89745/ExpoDetect
 
 > **lastConnectedAt**: `number` \| `null`
 
-Defined in: [src/hooks/useCarPlay.ts:24](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/hooks/useCarPlay.ts#L24)
+Defined in: [src/hooks/useCarPlay.ts:24](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/hooks/useCarPlay.ts#L24)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [src/hooks/useCarPlay.ts:24](https://github.com/Mike89745/ExpoDetect
 
 > **lastDisconnectedAt**: `number` \| `null`
 
-Defined in: [src/hooks/useCarPlay.ts:25](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/hooks/useCarPlay.ts#L25)
+Defined in: [src/hooks/useCarPlay.ts:25](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/hooks/useCarPlay.ts#L25)
 
 ***
 
@@ -58,7 +58,7 @@ Defined in: [src/hooks/useCarPlay.ts:25](https://github.com/Mike89745/ExpoDetect
 
 > **refresh**: () => `void`
 
-Defined in: [src/hooks/useCarPlay.ts:28](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/hooks/useCarPlay.ts#L28)
+Defined in: [src/hooks/useCarPlay.ts:28](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/hooks/useCarPlay.ts#L28)
 
 #### Returns
 
@@ -70,7 +70,7 @@ Defined in: [src/hooks/useCarPlay.ts:28](https://github.com/Mike89745/ExpoDetect
 
 > **setCarPlayNotificationConfig**: (`config`) => `void`
 
-Defined in: [src/hooks/useCarPlay.ts:30](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/hooks/useCarPlay.ts#L30)
+Defined in: [src/hooks/useCarPlay.ts:30](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/hooks/useCarPlay.ts#L30)
 
 #### Parameters
 
@@ -88,7 +88,7 @@ Defined in: [src/hooks/useCarPlay.ts:30](https://github.com/Mike89745/ExpoDetect
 
 > **startMonitoring**: () => `Promise`\<`void`\>
 
-Defined in: [src/hooks/useCarPlay.ts:26](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/hooks/useCarPlay.ts#L26)
+Defined in: [src/hooks/useCarPlay.ts:26](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/hooks/useCarPlay.ts#L26)
 
 #### Returns
 
@@ -100,7 +100,7 @@ Defined in: [src/hooks/useCarPlay.ts:26](https://github.com/Mike89745/ExpoDetect
 
 > **stopMonitoring**: () => `Promise`\<`void`\>
 
-Defined in: [src/hooks/useCarPlay.ts:27](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/hooks/useCarPlay.ts#L27)
+Defined in: [src/hooks/useCarPlay.ts:27](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/hooks/useCarPlay.ts#L27)
 
 #### Returns
 
@@ -112,4 +112,4 @@ Defined in: [src/hooks/useCarPlay.ts:27](https://github.com/Mike89745/ExpoDetect
 
 > **transport**: [`CarPlayTransport`](../type-aliases/CarPlayTransport.md) \| `null`
 
-Defined in: [src/hooks/useCarPlay.ts:22](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/hooks/useCarPlay.ts#L22)
+Defined in: [src/hooks/useCarPlay.ts:22](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/hooks/useCarPlay.ts#L22)

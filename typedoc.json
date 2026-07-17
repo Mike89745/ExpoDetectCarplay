@@ -6,6 +6,7 @@
   "plugin": ["typedoc-plugin-markdown"],
   "readme": "none",
   "excludeInternal": true,
+  "gitRevision": "master",
   "githubPages": false,
   "validation": {
     "notExported": true,

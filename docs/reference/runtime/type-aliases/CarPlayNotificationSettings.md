@@ -8,7 +8,7 @@
 
 > **CarPlayNotificationSettings** = `object`
 
-Defined in: [src/ExpoDetectCarplay.types.ts:26](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L26)
+Defined in: [src/ExpoDetectCarplay.types.ts:26](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L26)
 
 ## Properties
 
@@ -16,7 +16,7 @@ Defined in: [src/ExpoDetectCarplay.types.ts:26](https://github.com/Mike89745/Exp
 
 > `optional` **channel?**: [`CarPlayChannelConfig`](CarPlayChannelConfig.md)
 
-Defined in: [src/ExpoDetectCarplay.types.ts:29](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L29)
+Defined in: [src/ExpoDetectCarplay.types.ts:29](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L29)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/ExpoDetectCarplay.types.ts:29](https://github.com/Mike89745/Exp
 
 > `optional` **events?**: [`CarPlayNotificationConfig`](CarPlayNotificationConfig.md)
 
-Defined in: [src/ExpoDetectCarplay.types.ts:27](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L27)
+Defined in: [src/ExpoDetectCarplay.types.ts:27](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L27)
 
 ***
 
@@ -32,4 +32,4 @@ Defined in: [src/ExpoDetectCarplay.types.ts:27](https://github.com/Mike89745/Exp
 
 > `optional` **foregroundService?**: [`ForegroundServiceConfig`](ForegroundServiceConfig.md)
 
-Defined in: [src/ExpoDetectCarplay.types.ts:28](https://github.com/Mike89745/ExpoDetectCarplay/blob/737c91cdcc1fd580257efa4ccfbdc66fc6fc2046/src/ExpoDetectCarplay.types.ts#L28)
+Defined in: [src/ExpoDetectCarplay.types.ts:28](https://github.com/Mike89745/ExpoDetectCarplay/blob/master/src/ExpoDetectCarplay.types.ts#L28)
