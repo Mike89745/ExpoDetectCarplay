@@ -46,7 +46,7 @@ const LEGACY_SCENE_CLASSES = new Set([
 
 export function getIOSCarPlayPluginSwift(): string {
   return `\
-import ExpoDetectCarplay
+internal import ExpoDetectCarplay
 import Foundation
 import TSLocationManager
 
@@ -311,7 +311,13 @@ function findClosingBrace(contents: string, openingIndex: number): number {
 }
 
 function modifyAppDelegate(contents: string): string {
-  const importLine = 'import ExpoDetectCarplay';
+  const importLine = 'internal import ExpoDetectCarplay';
+  // Normalize bare imports left behind by older plugin versions so repeated
+  // prebuilds cannot insert a duplicate import.
+  contents = contents.replace(
+    /^([ \t]*)import ExpoDetectCarplay\b/gm,
+    '$1internal import ExpoDetectCarplay'
+  );
   if (!contents.includes(importLine)) {
     const lines = contents.split('\n');
     const lastImport = lines.reduce(
@@ -355,7 +361,8 @@ function unmodifyAppDelegate(contents: string): string {
     /^[ \t]*CarPlayLifecycleRegistry\.register\(CarPlayGeoPlugin\(\)\)\r?\n/gm,
     ''
   );
-  const generatedImport = /^import ExpoDetectCarplay \/\/ expo-detect-carplay-generated\r?\n/m;
+  const generatedImport =
+    /^(?:internal\s+)?import ExpoDetectCarplay \/\/ expo-detect-carplay-generated\r?\n/m;
   const withoutImport = contents.replace(generatedImport, '');
   if (!/\bCarPlayLifecycleRegistry\b/.test(withoutImport)) contents = withoutImport;
   return contents;
