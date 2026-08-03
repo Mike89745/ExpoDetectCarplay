@@ -44,6 +44,7 @@ import com.transistorsoft.locationmanager.adapter.BackgroundGeolocation
 import com.transistorsoft.locationmanager.adapter.callback.TSCallback
 import com.transistorsoft.locationmanager.adapter.callback.TSLocationCallback
 import com.transistorsoft.locationmanager.adapter.callback.TSSyncCallback
+import com.transistorsoft.locationmanager.config.TSConfig
 import com.transistorsoft.locationmanager.data.LocationModel
 import com.transistorsoft.locationmanager.event.LocationEvent
 import com.transistorsoft.locationmanager.location.TSCurrentPositionRequest
@@ -53,6 +54,7 @@ class CarPlayGeoPlugin(context: Context) : CarPlayEventPlugin {
   companion object {
     private const val TAG = "CarPlayGeoPlugin"
     private const val STOP_GRACE_MS = 30_000L
+    private const val HEALTH_CHECK_INTERVAL_MS = 300_000L
   }
 
   private val appContext = context.applicationContext
@@ -62,6 +64,7 @@ class CarPlayGeoPlugin(context: Context) : CarPlayEventPlugin {
   private var stopInFlight = false
   private var lifecycleGeneration = 0L
   private var pendingFinalization: Runnable? = null
+  private var pendingHealthCheck: Runnable? = null
 
   private fun logFailure(operation: String, error: Any) {
     Log.e(TAG, "$operation failed: $error")
@@ -79,6 +82,39 @@ class CarPlayGeoPlugin(context: Context) : CarPlayEventPlugin {
   private fun cancelPendingFinalization() {
     pendingFinalization?.let(mainHandler::removeCallbacks)
     pendingFinalization = null
+  }
+
+  private fun cancelPendingHealthCheck() {
+    pendingHealthCheck?.let(mainHandler::removeCallbacks)
+    pendingHealthCheck = null
+  }
+
+  private fun scheduleHealthCheck(generation: Long) {
+    cancelPendingHealthCheck()
+    val healthCheck = Runnable {
+      if (generation != lifecycleGeneration || !trackingRequested) return@Runnable
+      pendingHealthCheck = null
+      checkTrackingHealth(generation)
+    }
+    pendingHealthCheck = healthCheck
+    mainHandler.postDelayed(healthCheck, HEALTH_CHECK_INTERVAL_MS)
+  }
+
+  private fun checkTrackingHealth(generation: Long) {
+    if (generation != lifecycleGeneration || !trackingRequested) return
+    val enabled = try {
+      TSConfig.getInstance(appContext).toMap(false)["enabled"] as? Boolean
+    } catch (error: Throwable) {
+      logFailure("getState", error)
+      false
+    }
+    if (enabled != true) {
+      Log.w(TAG, "Tracking watchdog restarting disabled background geolocation")
+      ensureTrackingStarted()
+    }
+    if (generation == lifecycleGeneration && trackingRequested) {
+      scheduleHealthCheck(generation)
+    }
   }
 
   private fun canFinalize(generation: Long) =
@@ -161,6 +197,7 @@ class CarPlayGeoPlugin(context: Context) : CarPlayEventPlugin {
   override fun onCarPlayConnected(transport: String) = runOnMain {
     lifecycleGeneration += 1
     cancelPendingFinalization()
+    cancelPendingHealthCheck()
     val wasTrackingRequested = trackingRequested
     trackingRequested = true
     if (!wasTrackingRequested) {
@@ -168,9 +205,11 @@ class CarPlayGeoPlugin(context: Context) : CarPlayEventPlugin {
     } else if (!stopInFlight) {
       bgGeo.changePace(true, loggedCallback("changePace(true)"))
     }
+    scheduleHealthCheck(lifecycleGeneration)
   }
 
   override fun onCarPlayDisconnected() = runOnMain {
+    cancelPendingHealthCheck()
     if (!trackingRequested) return@runOnMain
     lifecycleGeneration += 1
     val generation = lifecycleGeneration

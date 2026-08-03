@@ -4,9 +4,15 @@ The optional bridge connects vehicle lifecycle events to
 `react-native-background-geolocation`:
 
 - A CarPlay or Android Auto connection starts tracking and switches to moving.
+- While connected, a native watchdog checks the SDK every five minutes. If the
+  SDK is disabled, the bridge starts it again and restores moving pace.
 - A disconnect waits 30 seconds to absorb short reconnects.
 - After the grace period, it persists a final position, switches to stationary,
   synchronizes pending records, and stops tracking.
+
+The watchdog is canceled immediately when the vehicle disconnects. Its
+five-minute cadence is best-effort on iOS because the operating system can
+suspend the app between background execution opportunities.
 
 ## Enable the bridge
 

@@ -53,11 +53,13 @@ import TSLocationManager
 final class CarPlayGeoPlugin: CarPlayLifecycleDelegate {
   private static let stopGrace: TimeInterval = 30
   private static let stationaryTransitionTimeout: TimeInterval = 10
+  private static let healthCheckInterval: TimeInterval = 300
 
   private var trackingRequested = false
   private var lifecycleGeneration: UInt = 0
   private var pendingFinalization: DispatchWorkItem?
   private var pendingStationaryTransition: DispatchWorkItem?
+  private var pendingHealthCheck: DispatchWorkItem?
   private var awaitingStationaryGeneration: UInt?
   private var motionChangeListenerRegistered = false
 
@@ -70,11 +72,13 @@ final class CarPlayGeoPlugin: CarPlayLifecycleDelegate {
       let bgGeo = BackgroundGeolocation.sharedInstance()
       bgGeo.start()
       bgGeo.changePace(true)
+      self.scheduleHealthCheck(generation: self.lifecycleGeneration)
     }
   }
 
   func carPlayDidDisconnect() {
     runOnMain {
+      self.cancelHealthCheck()
       guard self.trackingRequested else { return }
       self.lifecycleGeneration &+= 1
       let generation = self.lifecycleGeneration
@@ -105,6 +109,44 @@ final class CarPlayGeoPlugin: CarPlayLifecycleDelegate {
     pendingStationaryTransition?.cancel()
     pendingStationaryTransition = nil
     awaitingStationaryGeneration = nil
+  }
+
+  private func cancelHealthCheck() {
+    pendingHealthCheck?.cancel()
+    pendingHealthCheck = nil
+  }
+
+  private func scheduleHealthCheck(generation: UInt) {
+    cancelHealthCheck()
+    let healthCheck = DispatchWorkItem { [weak self] in
+      guard let self = self,
+            generation == self.lifecycleGeneration,
+            self.trackingRequested else { return }
+      self.pendingHealthCheck = nil
+      self.checkTrackingHealth(generation: generation)
+    }
+    pendingHealthCheck = healthCheck
+    DispatchQueue.main.asyncAfter(
+      deadline: .now() + Self.healthCheckInterval,
+      execute: healthCheck
+    )
+  }
+
+  private func checkTrackingHealth(generation: UInt) {
+    guard generation == lifecycleGeneration, trackingRequested else { return }
+    let bgGeo = BackgroundGeolocation.sharedInstance()
+    let enabled = bgGeo.getState()["enabled"] as? Bool
+    if enabled != true {
+      NSLog("[CarPlayGeoPlugin] Tracking watchdog restarting disabled background geolocation")
+      bgGeo.start()
+      bgGeo.changePace(true)
+      if (bgGeo.getState()["enabled"] as? Bool) != true {
+        NSLog("[CarPlayGeoPlugin] Tracking watchdog recovery did not enable background geolocation")
+      }
+    }
+    if generation == lifecycleGeneration && trackingRequested {
+      scheduleHealthCheck(generation: generation)
+    }
   }
 
   private func ensureMotionChangeListener() {
