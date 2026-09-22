@@ -147,6 +147,20 @@ public class ExpoDetectCarplayModule: Module {
         Function("getApiEndpoint") { () -> [String: String?] in
             self.apiForwarder.getConfig()
         }
+
+        // Internal E2E seam. It is intentionally absent from the public TypeScript API and
+        // rejects unless the example-only config plugin opted the host application in.
+        Function("__e2eEmitVirtualCarPlayEvent") { (connected: Bool, transport: String?) -> Void in
+            try self.onMainSync {
+                try self.emitVirtualCarPlayEvent(connected: connected, transport: transport)
+            }
+        }
+
+        Function("__e2eEmitVirtualCarPlayError") { (code: String, message: String) -> Void in
+            try self.onMainSync {
+                try self.emitVirtualCarPlayError(code: code, message: message)
+            }
+        }
     }
 
     private func startMonitoringInternal() {
@@ -169,6 +183,56 @@ public class ExpoDetectCarplayModule: Module {
             transport: payload["transport"] as? String
         )
         sendEvent(eventName, payload)
+    }
+
+    private func emitVirtualCarPlayEvent(connected: Bool, transport: String?) throws {
+        guard Bundle.main.object(
+            forInfoDictionaryKey: "ExpoDetectCarPlayVirtualTestingEnabled"
+        ) as? Bool == true else {
+            throw Exception(
+                name: "E2E_DRIVER_DISABLED",
+                description: "Virtual CarPlay events are available only in an explicitly opted-in test host"
+            )
+        }
+
+        let now = Date()
+        let timestamp = now.timeIntervalSince1970 * 1000.0
+        let normalizedTransport = transport.flatMap { $0.isEmpty ? nil : $0 } ?? "unknown"
+        var payload: [String: Any] = [
+            "timestamp": timestamp,
+            "timestampIso": CarPlayMonitor.isoFormatter.string(from: now),
+        ]
+        if connected {
+            payload["transport"] = normalizedTransport
+            defaults.set(true, forKey: CARPLAY_LAST_CONNECTED_KEY)
+            defaults.set(normalizedTransport, forKey: CARPLAY_LAST_TRANSPORT_KEY)
+            defaults.set(timestamp, forKey: CARPLAY_LAST_CONNECTED_AT_KEY)
+            CarPlayLifecycleRegistry.shared.dispatchCarPlayConnect(transport: normalizedTransport)
+            sendConnectionEvent("onCarPlayConnected", payload)
+        } else {
+            defaults.set(false, forKey: CARPLAY_LAST_CONNECTED_KEY)
+            defaults.removeObject(forKey: CARPLAY_LAST_TRANSPORT_KEY)
+            defaults.removeObject(forKey: CARPLAY_LAST_CONNECTED_AT_KEY)
+            CarPlayLifecycleRegistry.shared.dispatchCarPlayDisconnect()
+            sendConnectionEvent("onCarPlayDisconnected", payload)
+        }
+    }
+
+    private func emitVirtualCarPlayError(code: String, message: String) throws {
+        guard Bundle.main.object(
+            forInfoDictionaryKey: "ExpoDetectCarPlayVirtualTestingEnabled"
+        ) as? Bool == true else {
+            throw Exception(
+                name: "E2E_DRIVER_DISABLED",
+                description: "Virtual CarPlay events are available only in an explicitly opted-in test host"
+            )
+        }
+        let payload: [String: Any] = ["code": code, "message": message]
+        if isLoggingEnabled() {
+            getOrCreateEventLogger().logEvent(eventType: "onCarPlayError", identifier: nil, data: payload)
+        }
+        apiForwarder.forwardEvent(payload, eventType: "onCarPlayError")
+        sendEvent("onCarPlayError", payload)
     }
 
     private func connectionStatus() -> [String: Any] {

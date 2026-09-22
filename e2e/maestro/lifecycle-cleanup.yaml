@@ -1,0 +1,12 @@
+appId: expo.modules.detectcarplay.example
+name: expo-detect-carplay lifecycle cleanup
+---
+- launchApp:
+    permissions:
+      all: allow
+- tapOn:
+    id: e2e-lifecycle-cleanup
+- extendedWaitUntil:
+    visible:
+      id: e2e-lifecycle-idle
+    timeout: 30000

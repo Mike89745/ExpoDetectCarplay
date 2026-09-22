@@ -1,0 +1,10 @@
+appId: expo.modules.detectcarplay.example
+name: expo-detect-carplay lifecycle restore
+---
+- launchApp:
+    permissions:
+      all: allow
+- extendedWaitUntil:
+    visible:
+      id: e2e-lifecycle-restored
+    timeout: 30000

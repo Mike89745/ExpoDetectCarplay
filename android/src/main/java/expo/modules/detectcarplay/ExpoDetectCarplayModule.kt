@@ -184,8 +184,32 @@ class ExpoDetectCarplayModule : Module() {
                 ?: mapOf("url" to null, "apiKey" to null, "id" to null)
         }
 
+        // Internal E2E seam. It is intentionally absent from the public TypeScript API and
+        // rejects unless the example-only config plugin opted the host application in.
+        Function("__e2eEmitVirtualCarPlayEvent") { connected: Boolean, transport: String? ->
+            requireVirtualTestingEnabled()
+            emitVirtualCarPlayEvent(connected, transport)
+        }
+
+        Function("__e2eEmitVirtualCarPlayError") { code: String, message: String ->
+            requireVirtualTestingEnabled()
+            emitVirtualCarPlayError(code, message)
+        }
+
         OnCreate {
-            appContext.reactContext?.let(::migrateLegacyStateIfNeeded)
+            appContext.reactContext?.let { context ->
+                migrateLegacyStateIfNeeded(context)
+                if (CarPlayForegroundService.isEnabled(context)) {
+                    try {
+                        CarPlayForegroundService.enable(context)
+                    } catch (error: Throwable) {
+                        emitCarPlayError(
+                            "CARPLAY_START_FAILED",
+                            "Failed to restore CarPlay monitoring: ${error.message}",
+                        )
+                    }
+                }
+            }
             CarPlayForegroundService.bindModule(this@ExpoDetectCarplayModule)
         }
 
@@ -215,13 +239,63 @@ class ExpoDetectCarplayModule : Module() {
         return apiForwarder ?: CarPlayApiForwarder(context).also { apiForwarder = it }
     }
 
-    private fun rejectAndEmit(
-        promise: Promise,
-        code: String,
-        message: String,
-        cause: Throwable? = null,
-    ) {
-        promise.reject(code, message, cause)
+    private fun requireVirtualTestingEnabled() {
+        val context = requireContext()
+        val enabled = try {
+            val applicationInfo = context.packageManager.getApplicationInfo(
+                context.packageName,
+                PackageManager.GET_META_DATA,
+            )
+            applicationInfo.metaData?.getBoolean(VIRTUAL_TESTING_META_DATA, false) == true
+        } catch (_: Throwable) {
+            false
+        }
+        if (!enabled) {
+            throw expo.modules.kotlin.exception.CodedException(
+                "E2E_DRIVER_DISABLED",
+                "Virtual CarPlay events are available only in an explicitly opted-in test host",
+                null,
+            )
+        }
+    }
+
+    private fun emitVirtualCarPlayEvent(connected: Boolean, transport: String?) {
+        val context = requireContext()
+        val now = System.currentTimeMillis()
+        val normalizedTransport = transport?.takeIf { it.isNotBlank() } ?: "unknown"
+        val eventName = if (connected) "onCarPlayConnected" else "onCarPlayDisconnected"
+        val payload = buildMap<String, Any?> {
+            if (connected) put("transport", normalizedTransport)
+            put("timestamp", now)
+            put("timestampIso", formatIsoTimestamp(now))
+        }
+
+        CarPlayMonitor.setPersistedStatusForVirtualTesting(
+            context,
+            connected,
+            now,
+            normalizedTransport,
+        )
+        context.getSharedPreferences(JS_STATE_PREFS, Context.MODE_PRIVATE)
+            .edit()
+            .putBoolean(JS_CONNECTED_KEY, connected)
+            .apply()
+        if (CarPlayEventLogger.isLoggingEnabled(context)) {
+            getOrCreateEventLogger()?.logEvent(eventName, null, payload)
+        }
+        try {
+            getOrCreateApiForwarder()?.forwardEvent(payload, eventName)
+        } catch (_: Throwable) {}
+        if (connected) CarPlayPluginRegistry.dispatchConnected(normalizedTransport)
+        else CarPlayPluginRegistry.dispatchDisconnected()
+        sendEvent(eventName, payload)
+    }
+
+    private fun emitVirtualCarPlayError(code: String, message: String) {
+        emitCarPlayError(code, message)
+    }
+
+    private fun emitCarPlayError(code: String, message: String) {
         val payload = mapOf<String, Any?>("code" to code, "message" to message)
         try {
             if (appContext.reactContext?.let { CarPlayEventLogger.isLoggingEnabled(it) } == true) {
@@ -230,6 +304,16 @@ class ExpoDetectCarplayModule : Module() {
             getOrCreateApiForwarder()?.forwardEvent(payload, "onCarPlayError")
             sendEvent("onCarPlayError", payload)
         } catch (_: Throwable) {}
+    }
+
+    private fun rejectAndEmit(
+        promise: Promise,
+        code: String,
+        message: String,
+        cause: Throwable? = null,
+    ) {
+        promise.reject(code, message, cause)
+        emitCarPlayError(code, message)
     }
 
     private fun mapToJson(map: Map<String, Any?>): JSONObject {
@@ -328,6 +412,8 @@ class ExpoDetectCarplayModule : Module() {
     }
 
     companion object {
+        private const val VIRTUAL_TESTING_META_DATA =
+            "expo.modules.detectcarplay.VIRTUAL_TESTING_ENABLED"
         private val NOTIFICATION_SECTION_KEYS =
             setOf("events", "foregroundService", "channel")
         private val ISO_FORMAT = SimpleDateFormat(

@@ -1,0 +1,28 @@
+appId: expo.modules.detectcarplay.example
+name: expo-detect-carplay denied permissions
+---
+- clearState
+- launchApp:
+    permissions:
+      all: deny
+- assertVisible:
+    id: e2e-ready
+- tapOn:
+    id: e2e-run
+- tapOn:
+    id: com.android.permissioncontroller:id/permission_deny_button
+    optional: true
+- tapOn:
+    id: com.android.permissioncontroller:id/permission_deny_button
+    optional: true
+- tapOn:
+    id: com.android.permissioncontroller:id/permission_deny_button
+    optional: true
+- tapOn:
+    id: com.android.permissioncontroller:id/permission_deny_button
+    optional: true
+- extendedWaitUntil:
+    visible:
+      id: e2e-error
+    timeout: 30000
+- assertVisible: Required permissions were not granted

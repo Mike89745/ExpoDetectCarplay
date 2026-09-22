@@ -1,0 +1,15 @@
+appId: expo.modules.detectcarplay.example
+name: expo-detect-carplay lifecycle seed
+---
+- clearState
+- launchApp:
+    permissions:
+      all: allow
+- assertVisible:
+    id: e2e-ready
+- tapOn:
+    id: e2e-lifecycle-seed
+- extendedWaitUntil:
+    visible:
+      id: e2e-lifecycle-seeded
+    timeout: 30000

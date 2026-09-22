@@ -49,6 +49,8 @@ example/vendor/
 # node.js
 #
 node_modules/
+.e2e-artifacts/
+coverage/
 *.tsbuildinfo
 npm-debug.log
 yarn-debug.log

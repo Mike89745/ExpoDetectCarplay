@@ -10,9 +10,17 @@ The optional bridge connects vehicle lifecycle events to
 - After the grace period, it persists a final position, switches to stationary,
   synchronizes pending records, and stops tracking.
 
-The watchdog is canceled immediately when the vehicle disconnects. Its
-five-minute cadence is best-effort on iOS because the operating system can
-suspend the app between background execution opportunities.
+The watchdog is canceled immediately when the vehicle disconnects. On iOS it
+temporarily enables the SDK's five-minute heartbeat while CarPlay is connected,
+so checks continue after the app moves to the background; the app's previous
+`preventSuspend` and `heartbeatInterval` values are restored after disconnect
+finalization.
+Each check and any recovery attempt, success, or failure is written to both the
+native device log and the background-geolocation SDK log.
+
+iOS still does not guarantee wall-clock execution after the user force-quits
+the app or the operating system terminates its process. In that state the
+watchdog resumes when CarPlay or background location next relaunches the app.
 
 ## Enable the bridge
 

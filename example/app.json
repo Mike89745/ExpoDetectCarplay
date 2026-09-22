@@ -3,6 +3,25 @@
     "name": "expo-detect-carplay-example",
     "slug": "expo-detect-carplay-example",
     "version": "1.0.0",
+    "plugins": [
+      [
+        "../app.plugin.js",
+        {
+          "ios": {
+            "backgroundLocation": true,
+            "locationWhenInUsePermission": "The E2E host uses location permission to validate background CarPlay monitoring.",
+            "locationAlwaysPermission": "The E2E host uses background location to validate CarPlay state reconciliation."
+          },
+          "android": {
+            "androidAuto": {
+              "register": true,
+              "usesName": "template"
+            }
+          }
+        }
+      ],
+      "./plugins/withVirtualCarPlayTesting"
+    ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",

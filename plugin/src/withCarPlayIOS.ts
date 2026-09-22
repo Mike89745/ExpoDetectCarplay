@@ -62,6 +62,10 @@ final class CarPlayGeoPlugin: CarPlayLifecycleDelegate {
   private var pendingHealthCheck: DispatchWorkItem?
   private var awaitingStationaryGeneration: UInt?
   private var motionChangeListenerRegistered = false
+  private var heartbeatListenerRegistered = false
+  private var nextHealthCheckAt: Date?
+  private var previousPreventSuspend: Bool?
+  private var previousHeartbeatInterval: TimeInterval?
 
   func carPlayDidConnect(transport: String) {
     runOnMain {
@@ -69,10 +73,14 @@ final class CarPlayGeoPlugin: CarPlayLifecycleDelegate {
       self.cancelFinalization()
       self.trackingRequested = true
       self.ensureMotionChangeListener()
+      self.ensureHeartbeatListener()
       let bgGeo = BackgroundGeolocation.sharedInstance()
+      self.enableBackgroundWatchdog(using: bgGeo)
       bgGeo.start()
       bgGeo.changePace(true)
+      self.nextHealthCheckAt = Date().addingTimeInterval(Self.healthCheckInterval)
       self.scheduleHealthCheck(generation: self.lifecycleGeneration)
+      self.logWatchdog("Tracking watchdog armed for foreground timer and iOS heartbeat")
     }
   }
 
@@ -114,16 +122,18 @@ final class CarPlayGeoPlugin: CarPlayLifecycleDelegate {
   private func cancelHealthCheck() {
     pendingHealthCheck?.cancel()
     pendingHealthCheck = nil
+    nextHealthCheckAt = nil
   }
 
   private func scheduleHealthCheck(generation: UInt) {
-    cancelHealthCheck()
+    pendingHealthCheck?.cancel()
+    pendingHealthCheck = nil
     let healthCheck = DispatchWorkItem { [weak self] in
       guard let self = self,
             generation == self.lifecycleGeneration,
             self.trackingRequested else { return }
       self.pendingHealthCheck = nil
-      self.checkTrackingHealth(generation: generation)
+      self.runHealthCheckIfDue(generation: generation, source: "timer")
     }
     pendingHealthCheck = healthCheck
     DispatchQueue.main.asyncAfter(
@@ -132,21 +142,89 @@ final class CarPlayGeoPlugin: CarPlayLifecycleDelegate {
     )
   }
 
-  private func checkTrackingHealth(generation: UInt) {
+  private func runHealthCheckIfDue(generation: UInt, source: String) {
     guard generation == lifecycleGeneration, trackingRequested else { return }
+    let now = Date()
+    if let nextHealthCheckAt, now < nextHealthCheckAt {
+      return
+    }
+    self.nextHealthCheckAt = now.addingTimeInterval(Self.healthCheckInterval)
     let bgGeo = BackgroundGeolocation.sharedInstance()
     let enabled = bgGeo.getState()["enabled"] as? Bool
+    logWatchdog(
+      "Tracking watchdog health check: source=\\(source), enabled=\\(String(describing: enabled))"
+    )
     if enabled != true {
-      NSLog("[CarPlayGeoPlugin] Tracking watchdog restarting disabled background geolocation")
+      logWatchdog(
+        "Tracking watchdog restarting disabled background geolocation",
+        level: "warn"
+      )
       bgGeo.start()
       bgGeo.changePace(true)
       if (bgGeo.getState()["enabled"] as? Bool) != true {
-        NSLog("[CarPlayGeoPlugin] Tracking watchdog recovery did not enable background geolocation")
+        logWatchdog(
+          "Tracking watchdog recovery did not enable background geolocation",
+          level: "error"
+        )
+      } else {
+        logWatchdog("Tracking watchdog recovery completed")
       }
     }
     if generation == lifecycleGeneration && trackingRequested {
       scheduleHealthCheck(generation: generation)
     }
+  }
+
+  private func ensureHeartbeatListener() {
+    guard !heartbeatListenerRegistered else { return }
+    heartbeatListenerRegistered = true
+    _ = BackgroundGeolocation.sharedInstance().onHeartbeat { [weak self] _ in
+      guard let self = self else { return }
+      self.runOnMain {
+        self.runHealthCheckIfDue(
+          generation: self.lifecycleGeneration,
+          source: "heartbeat"
+        )
+      }
+    }
+  }
+
+  private func enableBackgroundWatchdog(using bgGeo: BackgroundGeolocation) {
+    guard previousPreventSuspend == nil, previousHeartbeatInterval == nil else { return }
+    let state = bgGeo.getState()
+    previousPreventSuspend = state["preventSuspend"] as? Bool ?? false
+    previousHeartbeatInterval = (state["heartbeatInterval"] as? NSNumber)?.doubleValue ?? 60
+    TSConfig.sharedInstance().update(with: [
+      "preventSuspend": true,
+      "heartbeatInterval": Self.healthCheckInterval,
+    ])
+  }
+
+  private func restoreBackgroundWatchdogConfiguration() {
+    guard let preventSuspend = previousPreventSuspend,
+          let heartbeatInterval = previousHeartbeatInterval else { return }
+    let state = BackgroundGeolocation.sharedInstance().getState()
+    var restored: [String: Any] = [:]
+    if state["preventSuspend"] as? Bool == true {
+      restored["preventSuspend"] = preventSuspend
+    }
+    if let currentInterval = (state["heartbeatInterval"] as? NSNumber)?.doubleValue,
+       currentInterval == Self.healthCheckInterval {
+      restored["heartbeatInterval"] = heartbeatInterval
+    }
+    if !restored.isEmpty {
+      TSConfig.sharedInstance().update(with: restored)
+    }
+    previousPreventSuspend = nil
+    previousHeartbeatInterval = nil
+  }
+
+  private func logWatchdog(_ message: String, level: String = "info") {
+    NSLog("[CarPlayGeoPlugin] %@", message)
+    BackgroundGeolocation.sharedInstance().log(
+      level,
+      message: "[CarPlayGeoPlugin] \\(message)"
+    )
   }
 
   private func ensureMotionChangeListener() {
@@ -224,6 +302,7 @@ final class CarPlayGeoPlugin: CarPlayLifecycleDelegate {
   private func stopTracking(generation: UInt) {
     guard canFinalize(generation) else { return }
     BackgroundGeolocation.sharedInstance().stop()
+    restoreBackgroundWatchdogConfiguration()
   }
 
   private func runOnMain(_ block: @escaping () -> Void) {

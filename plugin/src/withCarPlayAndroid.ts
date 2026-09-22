@@ -48,6 +48,7 @@ import com.transistorsoft.locationmanager.config.TSConfig
 import com.transistorsoft.locationmanager.data.LocationModel
 import com.transistorsoft.locationmanager.event.LocationEvent
 import com.transistorsoft.locationmanager.location.TSCurrentPositionRequest
+import com.transistorsoft.locationmanager.logger.TSLog
 import expo.modules.detectcarplay.CarPlayEventPlugin
 
 class CarPlayGeoPlugin(context: Context) : CarPlayEventPlugin {
@@ -67,7 +68,20 @@ class CarPlayGeoPlugin(context: Context) : CarPlayEventPlugin {
   private var pendingHealthCheck: Runnable? = null
 
   private fun logFailure(operation: String, error: Any) {
-    Log.e(TAG, "$operation failed: $error")
+    val message = "$operation failed: $error"
+    Log.e(TAG, message)
+    try {
+      TSLog.log("error", "[$TAG] $message")
+    } catch (_: Throwable) {}
+  }
+
+  private fun logWatchdog(message: String, level: String = "info") {
+    if (level == "warn") Log.w(TAG, message) else Log.i(TAG, message)
+    try {
+      TSLog.log(level, "[$TAG] $message")
+    } catch (error: Throwable) {
+      Log.w(TAG, "Failed to write watchdog message to background-geolocation log", error)
+    }
   }
 
   private fun loggedCallback(operation: String) = object : TSCallback {
@@ -108,9 +122,10 @@ class CarPlayGeoPlugin(context: Context) : CarPlayEventPlugin {
       logFailure("getState", error)
       false
     }
+    logWatchdog("Tracking watchdog health check: enabled=$enabled")
     if (enabled != true) {
-      Log.w(TAG, "Tracking watchdog restarting disabled background geolocation")
-      ensureTrackingStarted()
+      logWatchdog("Tracking watchdog restarting disabled background geolocation", "warn")
+      ensureTrackingStarted(watchdogRecovery = true)
     }
     if (generation == lifecycleGeneration && trackingRequested) {
       scheduleHealthCheck(generation)
@@ -120,16 +135,29 @@ class CarPlayGeoPlugin(context: Context) : CarPlayEventPlugin {
   private fun canFinalize(generation: Long) =
     !trackingRequested && generation == lifecycleGeneration
 
-  private fun ensureTrackingStarted() {
+  private fun ensureTrackingStarted(watchdogRecovery: Boolean = false) {
     if (!trackingRequested || stopInFlight) return
     bgGeo.start(object : TSCallback {
       override fun onSuccess() = runOnMain {
         if (trackingRequested && !stopInFlight) {
-          bgGeo.changePace(true, loggedCallback("changePace(true)"))
+          if (watchdogRecovery) {
+            bgGeo.changePace(true, object : TSCallback {
+              override fun onSuccess() {
+                logWatchdog("Tracking watchdog recovery completed")
+              }
+
+              override fun onFailure(error: String) {
+                logFailure("watchdog changePace(true)", error)
+              }
+            })
+          } else {
+            bgGeo.changePace(true, loggedCallback("changePace(true)"))
+          }
         }
       }
 
-      override fun onFailure(error: String) = logFailure("start", error)
+      override fun onFailure(error: String) =
+        logFailure(if (watchdogRecovery) "watchdog start" else "start", error)
     })
   }
 

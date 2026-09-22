@@ -1,0 +1,21 @@
+appId: expo.modules.detectcarplay.example
+name: expo-detect-carplay native bridge and persistence
+---
+- clearState
+- launchApp:
+    permissions:
+      all: allow
+- assertVisible:
+    id: e2e-ready
+- assertVisible:
+    id: e2e-hook-probe
+- tapOn:
+    id: e2e-run
+- extendedWaitUntil:
+    visible:
+      id: e2e-passed
+    timeout: 120000
+- assertVisible:
+    id: virtual-ride-passed
+- assertNotVisible:
+    id: e2e-error

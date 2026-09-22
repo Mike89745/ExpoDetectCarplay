@@ -17,10 +17,13 @@ describe('generated CarPlay background-geolocation plugin', () => {
     expect(source).toContain(
       'TSConfig.getInstance(appContext).toMap(false)["enabled"] as? Boolean'
     );
+    expect(source).toContain('logWatchdog("Tracking watchdog health check: enabled=$enabled")');
+    expect(source).toContain('TSLog.log(level, "[$TAG] $message")');
     expect(source).toContain(
-      'Log.w(TAG, "Tracking watchdog restarting disabled background geolocation")'
+      'logWatchdog("Tracking watchdog restarting disabled background geolocation", "warn")'
     );
-    expect(source).toContain('ensureTrackingStarted()');
+    expect(source).toContain('ensureTrackingStarted(watchdogRecovery = true)');
+    expect(source).toContain('logWatchdog("Tracking watchdog recovery completed")');
     expect(source).toContain('scheduleHealthCheck(lifecycleGeneration)');
     expect(source).toContain('pendingHealthCheck?.let(mainHandler::removeCallbacks)');
     expect(source).toContain(
@@ -46,9 +49,15 @@ describe('generated CarPlay background-geolocation plugin', () => {
 
     expect(source).toContain('private static let healthCheckInterval: TimeInterval = 300');
     expect(source).toContain('let enabled = bgGeo.getState()["enabled"] as? Bool');
-    expect(source).toContain(
-      'NSLog("[CarPlayGeoPlugin] Tracking watchdog restarting disabled background geolocation")'
-    );
+    expect(source).toContain('source=\\(source), enabled=\\(String(describing: enabled))');
+    expect(source).toContain('BackgroundGeolocation.sharedInstance().log(');
+    expect(source).toContain('logWatchdog("Tracking watchdog recovery completed")');
+    expect(source).toContain('BackgroundGeolocation.sharedInstance().onHeartbeat');
+    expect(source).toContain('"preventSuspend": true');
+    expect(source).toContain('"heartbeatInterval": Self.healthCheckInterval');
+    expect(source).toContain('TSConfig.sharedInstance().update(with: restored)');
+    expect(source).toContain('source: "heartbeat"');
+    expect(source).toContain('self.nextHealthCheckAt = Date().addingTimeInterval');
     expect(source).toContain('bgGeo.start()');
     expect(source).toContain('bgGeo.changePace(true)');
     expect(source).toContain('self.scheduleHealthCheck(generation: self.lifecycleGeneration)');
@@ -56,6 +65,9 @@ describe('generated CarPlay background-geolocation plugin', () => {
     expect(source).toContain('generation == self.lifecycleGeneration');
     expect(source).toMatch(
       /func carPlayDidDisconnect\(\) \{\s+runOnMain \{\s+self\.cancelHealthCheck\(\)/
+    );
+    expect(source).toMatch(
+      /private func stopTracking\(generation: UInt\) \{[\s\S]*?BackgroundGeolocation\.sharedInstance\(\)\.stop\(\)\s+restoreBackgroundWatchdogConfiguration\(\)/
     );
     expect(source.match(/private var pendingHealthCheck: DispatchWorkItem\?/g)).toHaveLength(1);
   });

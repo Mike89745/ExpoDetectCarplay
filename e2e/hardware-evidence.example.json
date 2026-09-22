@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "repository": "expo-detect-carplay",
+  "commit": "replace-with-tested-commit",
+  "packageVersion": "1.0.7",
+  "runs": {
+    "android": {
+      "device": "replace-with-device-model",
+      "osVersion": "replace-with-android-version-and-api-level",
+      "completedAt": "2026-09-21T00:00:00.000Z",
+      "checks": {
+        "permissions": "pending",
+        "diagnostics": "pending",
+        "wiredConnection": "pending",
+        "wirelessConnection": "pending",
+        "rapidTransitions": "pending",
+        "backgroundAndRelaunch": "pending",
+        "rebootAndProcessRecovery": "pending",
+        "stopAndCleanup": "pending",
+        "notifications": "pending",
+        "eventStorage": "pending",
+        "httpsForwarding": "pending",
+        "failurePaths": "pending"
+      },
+      "artifacts": [
+        "replace-with-relative-path-or-https-url"
+      ]
+    },
+    "ios": {
+      "device": "replace-with-device-model",
+      "osVersion": "replace-with-ios-version",
+      "completedAt": "2026-09-21T00:00:00.000Z",
+      "checks": {
+        "permissions": "pending",
+        "diagnostics": "pending",
+        "wiredConnection": "pending",
+        "wirelessConnection": "pending",
+        "rapidTransitions": "pending",
+        "backgroundAndRelaunch": "pending",
+        "stopAndCleanup": "pending",
+        "notifications": "pending",
+        "eventStorage": "pending",
+        "httpsForwarding": "pending",
+        "failurePaths": "pending",
+        "entitlements": "pending"
+      },
+      "artifacts": [
+        "replace-with-relative-path-or-https-url"
+      ]
+    }
+  }
+}

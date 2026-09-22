@@ -22,6 +22,7 @@ import org.json.JSONObject
 
 class CarPlayForegroundService : Service() {
     private val mainHandler = Handler(Looper.getMainLooper())
+    @Volatile private var foregroundStarted = false
     private var monitor: CarPlayMonitor? = null
     private var eventLogger: CarPlayEventLogger? = null
     private var apiForwarder: CarPlayApiForwarder? = null
@@ -36,11 +37,13 @@ class CarPlayForegroundService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        // startForegroundService() creates a strict obligation to promote before the service can
+        // be stopped, even when stopCarPlayMonitoring() has already disabled the persisted state.
+        enterForeground()
         if (!isEnabled(this)) {
             stopSelf()
             return START_NOT_STICKY
         }
-        enterForeground()
         startObserver()
         return START_STICKY
     }
@@ -56,6 +59,7 @@ class CarPlayForegroundService : Service() {
         } else {
             startForeground(FOREGROUND_NOTIFICATION_ID, notification)
         }
+        foregroundStarted = true
     }
 
     private fun startObserver(): Boolean {
@@ -279,6 +283,12 @@ class CarPlayForegroundService : Service() {
             CarPlayMonitor.clearPersistedState(appContext)
             appContext.getSharedPreferences(JS_STATE_PREFS, Context.MODE_PRIVATE)
                 .edit().clear().apply()
+            val service = activeService
+            if (service == null || !service.foregroundStarted) {
+                // Let a pending start reach onStartCommand(), promote, observe the disabled state,
+                // and stop itself. Stopping it before promotion crashes the host process.
+                return
+            }
             appContext.stopService(Intent(appContext, CarPlayForegroundService::class.java))
         }
 

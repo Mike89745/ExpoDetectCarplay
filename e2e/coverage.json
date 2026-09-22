@@ -1,0 +1,105 @@
+{
+  "declarations": {
+    "moduleFile": "src/ExpoDetectCarplayModule.ts",
+    "moduleType": "ExpoDetectCarplayModule",
+    "eventsFile": "src/ExpoDetectCarplay.types.ts",
+    "eventsType": "ExpoDetectCarplayModuleEvents"
+  },
+  "scenarios": {
+    "native-api": {
+      "kind": "automated",
+      "evidence": "e2e/maestro/native-api.yaml",
+      "description": "Real app, JS bridge, native persistence, permissions, service lifecycle, logging, and configuration"
+    },
+    "virtual-ride": {
+      "kind": "automated",
+      "evidence": "e2e/maestro/native-api.yaml",
+      "description": "Opt-in virtual connect/disconnect/error ride and 60-transition burst through persistence, lifecycle delegates, native logging, JS listeners, and useCarPlay"
+    },
+    "permission-errors": {
+      "kind": "automated",
+      "evidence": "e2e/maestro/permission-denied.yaml",
+      "description": "Cold-start permission denial and actionable bridge result"
+    },
+    "native-forwarding": {
+      "kind": "automated",
+      "evidence": "scripts/e2e/verify-forwarding.mjs",
+      "description": "Native HTTP payloads, headers, ordering, secrets, success, retries, and non-retryable responses against a controlled receiver"
+    },
+    "android-resilience": {
+      "kind": "automated",
+      "evidence": "scripts/e2e/android-resilience.mjs",
+      "description": "Foreground service and notification across background, lock, Doze, force-stop, relaunch, and optional Bluetooth/reboot checks"
+    },
+    "package-upgrade": {
+      "kind": "automated",
+      "evidence": "scripts/e2e/android-upgrade.mjs",
+      "description": "Persisted monitoring and foreground-service recovery after APK replacement, with optional prior-version migration"
+    },
+    "package-smoke": {
+      "kind": "automated",
+      "evidence": "scripts/e2e/package-smoke.mjs",
+      "description": "Published tarball contains runtime, plugin, and native sources while excluding development-only E2E files"
+    },
+    "ci-matrix": {
+      "kind": "automated",
+      "evidence": ".github/workflows/mobile-e2e.yml",
+      "description": "Deterministic checks plus scheduled/manual Android API 23/31/36 and iOS simulator release runs"
+    },
+    "hardware-car": {
+      "kind": "hardware",
+      "evidence": "e2e/hardware-checklist.md",
+      "description": "Physical CarPlay and Android Auto connection transitions, background execution, and forwarding"
+    },
+    "unit-contracts": {
+      "kind": "automated",
+      "evidence": "src/__tests__",
+      "description": "Deterministic generated-native-source and config-plugin contracts"
+    },
+    "web-fallback": {
+      "kind": "automated",
+      "evidence": "src/__tests__/webFallback-test.ts",
+      "description": "Unsupported-platform defaults, errors, and event subscription behavior"
+    },
+    "consumer-types": {
+      "kind": "automated",
+      "evidence": "tests/consumer/index.ts",
+      "description": "Published runtime and config-plugin import surface type-check"
+    },
+    "prebuild": {
+      "kind": "automated",
+      "evidence": "scripts/e2e/verify-prebuild.mjs",
+      "description": "Clean Expo prebuild followed by an idempotence comparison"
+    }
+  },
+  "coverage": {
+    "methods": {
+      "startCarPlayMonitoring": ["native-api", "android-resilience", "package-upgrade", "hardware-car"],
+      "stopCarPlayMonitoring": ["native-api", "android-resilience", "package-upgrade", "hardware-car"],
+      "isCarPlayMonitoringEnabled": ["native-api", "android-resilience", "package-upgrade", "hardware-car"],
+      "getCarPlayConnectionStatus": ["native-api", "hardware-car"],
+      "getCarPlayDiagnostics": ["native-api", "hardware-car"],
+      "setCarPlayNotificationConfig": ["native-api", "hardware-car"],
+      "requestPermissionsAsync": ["native-api", "permission-errors", "hardware-car"],
+      "enableEventLogging": ["native-api", "hardware-car"],
+      "disableEventLogging": ["native-api", "hardware-car"],
+      "isEventLoggingEnabled": ["native-api"],
+      "getEventLogs": ["native-api", "hardware-car"],
+      "clearEventLogs": ["native-api"],
+      "destroyEventLogs": ["native-api"],
+      "setApiEndpoint": ["native-api", "native-forwarding", "hardware-car"],
+      "getApiEndpoint": ["native-api", "native-forwarding"]
+    },
+    "events": {
+      "onCarPlayConnected": ["virtual-ride", "native-forwarding", "hardware-car"],
+      "onCarPlayDisconnected": ["virtual-ride", "native-forwarding", "hardware-car"],
+      "onCarPlayError": ["virtual-ride", "permission-errors", "native-forwarding", "hardware-car"]
+    },
+    "supplemental": {
+      "useCarPlayHook": ["native-api", "virtual-ride", "hardware-car"],
+      "webFallback": ["web-fallback"],
+      "configPlugin": ["unit-contracts", "prebuild", "ci-matrix"],
+      "packageExports": ["consumer-types", "package-smoke"]
+    }
+  }
+}

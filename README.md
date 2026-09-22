@@ -123,13 +123,11 @@ background location, the Driving Task entitlement, and integration options.
 ## Contributing
 
 ```sh
-npm run build
-npm test -- --runInBand
-npm run test:types
-npm run lint
-npm run docs:api
-npm pack --dry-run
+npm run test:all
 ```
+
+For clean-prebuild, emulator/device, and physical-accessory coverage, follow the
+[repository end-to-end test environment](https://github.com/Mike89745/ExpoDetectCarplay/tree/master/e2e).
 
 Repository-specific guidance is in [AGENTS.md](AGENTS.md).
 

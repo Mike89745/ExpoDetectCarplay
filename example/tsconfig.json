@@ -3,8 +3,8 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "expo-detect-carplay": ["../src/index"],
-      "expo-detect-carplay/*": ["../src/*"]
+      "expo-detect-carplay": ["../build/index"],
+      "expo-detect-carplay/*": ["../build/*"]
     }
   }
 }

@@ -407,6 +407,33 @@ internal class CarPlayMonitor(private val context: Context) {
             }
         }
 
+        internal fun setPersistedStatusForVirtualTesting(
+            context: Context,
+            connected: Boolean,
+            timestamp: Long,
+            transport: String,
+        ) {
+            val type = when (transport) {
+                "native" -> CarConnection.CONNECTION_TYPE_NATIVE
+                "projection" -> CarConnection.CONNECTION_TYPE_PROJECTION
+                else -> CarConnection.CONNECTION_TYPE_NOT_CONNECTED
+            }
+            context.applicationContext
+                .getSharedPreferences(CARPLAY_MONITOR_PREFS, Context.MODE_PRIVATE)
+                .edit()
+                .apply {
+                    putBoolean(KEY_LAST_CONNECTED, connected)
+                    if (connected) {
+                        putLong(KEY_LAST_CONNECTED_AT, timestamp)
+                        putInt(KEY_LAST_CONNECTED_TYPE, type)
+                    } else {
+                        remove(KEY_LAST_CONNECTED_AT)
+                        remove(KEY_LAST_CONNECTED_TYPE)
+                    }
+                }
+                .apply()
+        }
+
         private fun formatIsoUtc(millis: Long): String {
             synchronized(ISO_FORMAT) {
                 return ISO_FORMAT.format(Date(millis))
